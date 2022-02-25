@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom'
-
+import { SongAuthor } from '../features/songs/SongAuthor'
 
 
 const SingleSongPage = () => {
@@ -28,6 +28,7 @@ const SingleSongPage = () => {
         <Link to={`/editSong/${song.id}`} className="button">
           Edit Song
         </Link>
+        <SongAuthor userId={song.user} />
       </article>
     </section>
   )

@@ -3,6 +3,10 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 import { SongAuthor } from '../features/songs/SongAuthor'
+import { ReactionButtons } from '../features/songs/ReactionButtons'
+import { TimeAgo } from '../features/songs/TimeAgo'
+
+
 
 
 const SingleSongPage = () => {
@@ -22,13 +26,17 @@ const SingleSongPage = () => {
 
   return (
     <section>
-      <article className="post">
+      <article className="song">
         <h2>{song.title}</h2>
-        <p className="post-content">{song.lyric}</p>
+        <div>
+          <SongAuthor userId={song.user} />
+          <TimeAgo timestamp={song.date} />
+        </div>
+        <p className="song-content">{song.lyric}</p>
+        <ReactionButtons song={song} />
         <Link to={`/editSong/${song.id}`} className="button">
           Edit Song
         </Link>
-        <SongAuthor userId={song.user} />
       </article>
     </section>
   )

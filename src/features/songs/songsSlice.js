@@ -1,8 +1,36 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit'
+import { sub } from 'date-fns'
+
 
 const initialState = [
-    { id: '1', title: 'First Song!', lyric: 'Hello!' },
-    { id: '2', title: 'Second Song', lyric: 'More text' }
+    {
+      id: '1',
+      title: 'First Post!',
+      lyric: 'Hello!',
+      user: '0',
+      date: sub(new Date(), { minutes: 10 }).toISOString(),
+      reactions: {
+        thumbsUp: 0,
+        hooray: 0,
+        heart: 0,
+        rocket: 0,
+        eyes: 0,
+      },
+    },
+    {
+      id: '2',
+      title: 'Second Post',
+      lyric: 'More text',
+      user: '2',
+      date: sub(new Date(), { minutes: 5 }).toISOString(),
+      reactions: {
+        thumbsUp: 0,
+        hooray: 0,
+        heart: 0,
+        rocket: 0,
+        eyes: 0,
+      },
+    },
   ]
 
   const songsSlice = createSlice({
@@ -32,10 +60,17 @@ const initialState = [
               existingSong.title = title
               existingSong.lyric = lyric
             }
+          },
+          reactionAdded(state, action) {
+            const { songId, reaction } = action.payload 
+            const existingSong = state.find(song => song.id === songId)
+            if (existingSong) {
+              existingSong.reactions[reaction]++
+            }
           }
     }
   })
 
-  export const { songAdded, songUpdated } = songsSlice.actions
+  export const { songAdded, songUpdated, reactionAdded } = songsSlice.actions
 
   export default songsSlice.reducer

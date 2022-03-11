@@ -15,7 +15,7 @@ export const store = configureStore({
     [lyricsApi.reducerPath]: lyricsApi.reducer
   },
     middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(pokemonApi.middleware),
+    getDefaultMiddleware().concat(lyricsApi.middleware),
 });
 
 setupListeners(store.dispatch)

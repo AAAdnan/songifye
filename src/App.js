@@ -7,6 +7,7 @@ import SingleSongPage from './pages/SingleSongPage'
 import CreateSongPage from './pages/CreateSongPage'
 import EditSongPage  from './pages/EditSongPage'
 import LyricsSearchPage from './pages/LyricsSearchPage'
+import AppleFormPage from './pages/AppleFormPage'
 import Pokemon from './pages/Pokemon'
 import { Navbar } from './components/Navbar'
 
@@ -23,6 +24,7 @@ const App = () => {
         <Route exact path="/CreateSong" element={<CreateSongPage />} />
         <Route exact path="/editSong/:id" element={<EditSongPage />} />
         <Route exact path="/LyricsSearch" element={<LyricsSearchPage />} />
+        <Route exact path ="/AppleForm" element={<AppleFormPage />} />
         <Route exact path ="/Pokemon" element={<Pokemon />} />
         <Route
             path="*"

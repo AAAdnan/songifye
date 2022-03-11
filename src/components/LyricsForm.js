@@ -4,17 +4,13 @@ import { useGetLyricsByArtistQuery } from '../services/lyrics'
 export const LyricsForm = () => {
 
     const [lyrics, setLyrics] = useState('');
+    const [list, setList] = useState([]);
 
-    const { data, error, isLoading } = useGetLyricsByArtistQuery('Artic')
 
-
-    const handleChange = (event) => {
-        setLyrics(event.target.value);
-    };
     
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(lyrics);
+        const { data, error, isLoading } = useGetLyricsByArtistQuery(lyrics)
         console.log(data)
         setLyrics()
     };
@@ -30,12 +26,11 @@ export const LyricsForm = () => {
               type="text"
               name="lyrics"
               placeholder="Enter artist or song name"
-              value={lyrics}
-              onChange={handleChange}
+              onChange={event => setLyrics(event.target.value)} value={lyrics}
             />
           </div>
           <div>
-            <button>Submit</button>
+            <button type="submit">Submit</button>
           </div>
         </form>
 

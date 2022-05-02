@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useGetSongsByArtistQuery, useGetLyricsByArtistQuery } from '../services/lyrics'
-import Table from "./Table";
+import styled from 'styled-components/macro'
+import { useSelector, useDispatch } from 'react-redux'
+import { artistAdded } from '../features/lyrics/lyricsSlice'
+import { songAdded } from '../features/lyrics/lyricsSlice'  
 
 
 export const LyricsSearchForm = ({ showLyricsDisplay }) => {
@@ -14,7 +17,12 @@ export const LyricsSearchForm = ({ showLyricsDisplay }) => {
 
     const myRef = useRef();
 
+    const dispatch = useDispatch();
+
+
     const { data, error, isLoading } = useGetSongsByArtistQuery(artist, { skip: skipSongSearch })
+
+    console.log(data)
 
     if(data && data.data) {
         setSkipSongSearch(!skipSongSearch)
@@ -45,42 +53,113 @@ export const LyricsSearchForm = ({ showLyricsDisplay }) => {
         setSkipLyricSearch(!skipLyricSearch)
         setSelectedArtist(artist)
         setSelectedSongLyrics(song)
+        dispatch(songAdded(artist, song ))
     }
 
   
 
     return (
-      <div>
+      <Wrapper>
+          <Title>Lyrics Search</Title>
+          <Input 
+            type="text"
+            name="lyrics"
+            placeholder="Enter artist or song name"
+            id="lyric"
+            ref={myRef}
+          >
+          </Input>
           <div>
-            <h3>Lyrics Search</h3>
+            <Button theme="pink" onClick={handleSubmit}>Submit</Button>
           </div>
-          <div>
-            <input
-              type="text"
-              name="lyrics"
-              placeholder="Enter artist or song name"
-              id="lyric"
-              ref={myRef}
-            />
-          </div>
-          <div>
-            <button onClick={handleSubmit}>Submit</button>
-          </div>
-          <table>
-            <tr>
-                <th>Artist</th>
-                <th>Song Title</th>
-            </tr>
+          { songList.length !==0 &&
+          <Table>
+            <TableContent>
+                <TableHeading>Artist</TableHeading>
+                <TableHeading>Song Title</TableHeading>
+            </TableContent>
             {songList.length !==0 && songList.map(song => (
-                <tr onClick={() => getSongLyrics(song.artist.name, song.title_short)}>
+                <TableContent onClick={() => getSongLyrics(song.artist.name, song.title_short)}>
                     <td key={song.id}>{song.artist.name}</td> 
                     <td onClick={() => showLyricsDisplay(true)}
                     >{song.title_short}</td> 
-                </tr>
+                </TableContent>
             ))}
-          </table>
-          <div>{selectedSongLyric}</div>
-      </div>
+          </Table>
+            }
+      </Wrapper>
     );
   }
+
+const theme = {
+    blue: {
+      default: "#3f51b5",
+      hover: "#283593"
+    },
+    pink: {
+      default: "palevioletred",
+      hover: "#ad1457"
+    }
+  };
+
+const Title = styled.h1`
+  font-size: 3.5em;
+  text-align: center;
+  color: #F8B88B
+  ;
+`;
+
+const Wrapper = styled.section`
+  text-align: center;
+`;
+
+const Input = styled.input`
+  padding: 10px;
+  margin: 10px 0;
+  border:0; 
+  border-bottom:1px solid #eee;
+  box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+  border-radius:10px;
+  font-family:inherit;
+`;
+
+const Button = styled.button`
+  background-color: ${(props) => theme[props.theme].default};
+  color: white;
+  padding: 5px 15px;
+  border-radius: 5px;
+  outline: 0;
+  text-transform: uppercase;
+  margin: 10px 0px;
+  cursor: pointer;
+  box-shadow: 0px 2px 2px lightgray;
+  transition: ease background-color 250ms;
+  &:hover {
+    background-color: ${(props) => theme[props.theme].hover};
+  }
+  &:disabled {
+    cursor: default;
+    opacity: 0.7;
+  }
+`;
+
+Button.defaultProps = {
+  theme: "pink"
+};
+
+const Table = styled.table`
+    margin-top: 10px;
+    margin-left:auto; 
+    margin-right:auto;
+    width: 100%;
+`
+
+const TableHeading = styled.th`
+    color: palevioletred
+`
+
+const TableContent = styled.tr`
+    color: salmon
+`
+
   

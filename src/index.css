@@ -12,7 +12,7 @@ p {
 nav {
   display: flex;
   padding: 2rem 0;
-  background: #111;
+  background: salmon;
 }
 
 nav section {
@@ -30,11 +30,12 @@ nav a:first-of-type {
 }
 
 nav a:hover {
-  background: #222;
+  background: papayawhip;
+  color: salmon;
 }
 
 a {
-  color: #ea3546;
+  color: white;
   text-decoration: none;
 }
 

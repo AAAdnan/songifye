@@ -16,10 +16,8 @@ const LyricsSearchFormPage = () => {
 
   return (
   <Wrapper>
-    <div>
       { !lyricsDisplay  && <LyricsSearchForm showLyricsDisplay={showLyricsDisplay} /> }
       { lyricsDisplay && <LyricsDisplay showLyricsDisplay={showLyricsDisplay }/> }
-    </div>
   </Wrapper>
   )
   }

@@ -35,14 +35,16 @@ export const LyricsDisplay = ({ showLyricsDisplay }) => {
       <Wrapper>
         <DivTitle>
         { currentArtist && currentSong && 
-                <div>
+                    <>
                     <TitleArtist> { currentArtist }</TitleArtist> 
                     <TitleSong> { currentSong }</TitleSong> 
-                </div>
+                    </>
         }
             <Button theme="pink" onClick={() => showLyricsDisplay(false)}>Back</Button>
         </DivTitle>
-        { data && data.lyrics && <Div> {data.lyrics}</Div>}
+        { data && data.lyrics && 
+            <Div> {data.lyrics}</Div>
+        }
       </Wrapper>
     );
   }
@@ -69,12 +71,17 @@ const Wrapper = styled.section`
 const Div = styled.div`
   white-space: pre-wrap;
   color: salmon;
+  margin-top: 20px;
 `
 
 const DivTitle = styled.div`
     display: flex;
     flex-direction: column;
-js`
+    align-items: center;
+    height: 30%;
+    justify-content: space-between
+    `
+
 
 const Button = styled.button`
   background-color: ${(props) => theme[props.theme].default};
@@ -94,7 +101,7 @@ const Button = styled.button`
     cursor: default;
     opacity: 0.7;
   }
-  width: 50%;
+  margin-top: 20px;
 `;
 
 Button.defaultProps = {

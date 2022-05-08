@@ -27,5 +27,5 @@ export default LyricsSearchFormPage
 const Wrapper = styled.section`
   padding: 4em;
   background: papayawhip;
-  height: 100vh;
+  min-height: 100vh;
 `;

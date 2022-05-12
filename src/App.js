@@ -52,7 +52,7 @@ const App = () => {
         <Route exact path="Reset" element={<Reset/>} />
         <Route exact path="Songs" element={<SongsPage/>} />
         <Route exact path="Songs/:id" element={<SingleSongPage />} />
-        <Route exact path="CreateSong" element={<CreateSongPage />} />
+        <Route exact path="WriteSong" element={<CreateSongPage />} />
         <Route exact path="editSong/:id" element={<EditSongPage />} />
         <Route exact path="LyricSearch" element={<LyricsSearchFormPage />} />
         <Route exact path ="Pokemon" element={<Pokemon />} />

@@ -1,13 +1,26 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import styled from 'styled-components/macro'
+import { useSelector, useDispatch } from "react-redux";
+import { saveUserDetails } from "../../features/users/usersSlice";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import Modal from "../../components/Modal/modal"
 
 
 
 const Register = () => {
+
+  let navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [active, setActive] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("")
 
+
+  const dispatch = useDispatch();
   const auth = getAuth();
 
   const handleRegister = () => {
@@ -15,15 +28,22 @@ const Register = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log("Registered user: ", user);
+        dispatch(saveUserDetails(user.email))
         setEmail("");
         setPassword("");
+        navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log("Error ocurred: ", errorCode, errorMessage);
+        setActive(true);
+        setErrorMessage(error.message)
+
       });
   };
+
+  const canSave = Boolean(email) && Boolean(password)
 
   return (
     <Wrapper>
@@ -44,7 +64,14 @@ const Register = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <br />
-      <Button theme="pink" onClick={handleRegister}>Register</Button>
+      <Button theme="pink" onClick={handleRegister} disabled={!canSave}>Register</Button>
+      <Modal
+        active={active}
+        hideModal={() => setActive(false)}
+        icon="fa-solid fa-exclamation"
+      >
+      {errorMessage}
+    </Modal>
     </Wrapper>
   );
 };

@@ -10,8 +10,6 @@ export const LyricsSearchForm = ({ showLyricsDisplay }) => {
 
     const [artist, setArtist] = useState('');
     const [songList, setSongList] = useState([]);
-    const [selectedArtist, setSelectedArtist] = useState('');
-    const [selectedSongLyric, setSelectedSongLyrics] = useState('')
     const [skipSongSearch, setSkipSongSearch ] = useState(true)
     const [skipLyricSearch, setSkipLyricSearch ] = useState(true)
 
@@ -28,7 +26,6 @@ export const LyricsSearchForm = ({ showLyricsDisplay }) => {
         setSkipSongSearch(!skipSongSearch)
         setSongList(data.data)
     }
-
 
     const handleSubmit = () => {
 
@@ -47,8 +44,6 @@ export const LyricsSearchForm = ({ showLyricsDisplay }) => {
 
     const getSongLyrics = (artist, song) => {
         setSkipLyricSearch(!skipLyricSearch)
-        setSelectedArtist(artist)
-        setSelectedSongLyrics(song)
         dispatch(songAdded(artist, song ))
     }
 

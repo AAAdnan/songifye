@@ -3,8 +3,10 @@ import { useSelector } from 'react-redux'
 
 export const SongAuthor = ({ userId }) => {
   const author = useSelector(state =>
-    state.users.find(user => user.id === userId)
+    state.songs.find(song => song.user === userId)
   )
 
-  return <span>by {author ? author.name : 'Unknown author'}</span>
+  console.log(author)
+
+  return <span>by {author ? author.user : 'Unknown author'}</span>
 }

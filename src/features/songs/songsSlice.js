@@ -9,13 +9,7 @@ const initialState = [
       lyric: 'Hello!',
       user: '0',
       date: sub(new Date(), { minutes: 10 }).toISOString(),
-      reactions: {
-        thumbsUp: 0,
-        hooray: 0,
-        heart: 0,
-        rocket: 0,
-        eyes: 0,
-      },
+     
     },
     {
       id: '2',
@@ -23,13 +17,7 @@ const initialState = [
       lyric: 'More text',
       user: '2',
       date: sub(new Date(), { minutes: 5 }).toISOString(),
-      reactions: {
-        thumbsUp: 0,
-        hooray: 0,
-        heart: 0,
-        rocket: 0,
-        eyes: 0,
-      },
+     
     },
   ]
 
@@ -41,14 +29,14 @@ const initialState = [
             reducer(state, action) {
               state.push(action.payload)
             },
-            prepare(title, lyric, userId) {
+            prepare(title, lyric, user) {
               return {
                 payload: {
                   id: nanoid(),
                   date: new Date().toISOString(),
                   title,
                   lyric,
-                  user: userId
+                  user: user
                 }
               }
             }

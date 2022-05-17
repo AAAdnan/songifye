@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 import { songAdded} from '../features/songs/songsSlice'
+import { Redirect, Route, useNavigate } from "react-router-dom";
 
 export const AddSongForm = () => {
   const [title, setTitle] = useState('')
   const [lyric, setLyric] = useState('')
 
   const dispatch = useDispatch()
+  let navigate = useNavigate();
 
   const users = useSelector(state => state.users)
 
@@ -21,6 +23,7 @@ export const AddSongForm = () => {
       dispatch(songAdded(title, lyric, user))
       setTitle('')
       setLyric('')
+      navigate("/songs");
     }
   }
 
@@ -98,7 +101,6 @@ const Form = styled.form`
     width: 75%;
     border-style: solid; 
     border-color: #F8B88B;
-
 `
 
 const SongTitleDiv = styled.div`

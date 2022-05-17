@@ -3,10 +3,8 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 import { SongAuthor } from '../features/songs/SongAuthor'
-import { ReactionButtons } from '../features/songs/ReactionButtons'
 import { TimeAgo } from '../features/songs/TimeAgo'
-
-
+import styled from 'styled-components/macro'
 
 
 const SingleSongPage = () => {
@@ -25,21 +23,67 @@ const SingleSongPage = () => {
   }
 
   return (
-    <section>
+    <Wrapper>
       <article className="song">
-        <h2>{song.title}</h2>
+        <Title>{song.title}</Title>
         <div>
           <SongAuthor userId={song.user} />
           <TimeAgo timestamp={song.date} />
         </div>
         <p className="song-content">{song.lyric}</p>
-        <ReactionButtons song={song} />
-        <Link to={`/editSong/${song.id}`} className="button">
-          Edit Song
-        </Link>
+        <Div>
+          <Link to={`/editSong/${song.id}`} >
+          <Button>
+              Edit Song
+          </Button>
+          </Link>
+          <Link to={`/songs`}>
+            <Button>
+                Back
+            </Button>
+          </Link>
+        </Div>
       </article>
-    </section>
+    </Wrapper>
   )
 }
 
 export default SingleSongPage
+
+const Wrapper = styled.section`
+    background: papayawhip;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+`;
+
+const Title = styled.h2`
+    font-size: 3.5em;
+    font-weight: bold;
+    text-align: center;
+    color: #F8B88B
+`;
+
+const Div = styled.div`
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     padding: 20px 20px;
+`
+
+const Button = styled.button`
+  background: #ea3546;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: white;
+  border-radius: 4px;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  margin-bottom: 5px;
+  &:hover {
+    background: salmon;
+    color:white;
+  }
+`

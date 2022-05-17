@@ -1,10 +1,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { SongAuthor } from '../features/songs/SongAuthor'
 import { TimeAgo } from '../features/songs/TimeAgo'
-import { ReactionButtons } from '../features/songs/ReactionButtons'
-
+import { SongAuthor } from '../features/songs/SongAuthor'
+import styled from 'styled-components/macro'
 
 export const SongsList = () => {
 
@@ -18,6 +17,7 @@ export const SongsList = () => {
     <article className="post-excerpt" key={song.id}>
       <h3>{song.title}</h3>
       <div>
+        <SongAuthor userId={song.user} />
         <TimeAgo timestamp={song.date} />
       </div>
       <p className="post-content">{song.lyric.substring(0, 100)}</p>
@@ -28,9 +28,26 @@ export const SongsList = () => {
   ))
 
   return (
-    <section className="posts-list">
-      <h2>Songs</h2>
+    <Wrapper className="posts-list">
+      <Title>Songs</Title>
       {renderedSongs}
-    </section>
+    </Wrapper>
   )
 }
+
+const Title = styled.h2`
+    font-size: 3.5em;
+    font-weight: bold;
+    text-align: center;
+    color: #F8B88B
+`;
+
+const Wrapper = styled.section`
+    background: papayawhip;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+`;
+

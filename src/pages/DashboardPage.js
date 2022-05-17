@@ -15,16 +15,16 @@ const DashboardPage = () => {
             <Title>Profile</Title>
             <p>Welcome {user}</p>
             <Div>
-            <Button>
-            <Link to="/songs">
-                View Songs
-            </Link>
-            </Button>
-            <Button>
-                <Link to="/WriteSong">
-                    Write Song
-                </Link>
-            </Button>
+                <Button>
+                    <Link to="/songs">
+                        View Songs
+                    </Link>
+                </Button>
+                <Button>
+                    <Link to="/WriteSong">
+                        Write Song
+                    </Link>
+                </Button>
             </Div>
         </Wrapper>
     )
@@ -50,21 +50,21 @@ const Title = styled.h2`
 `;
 
 const Div = styled.div`
-    display: inline-block;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
     padding: 20px;
 `
 
 
 const Button = styled.button`
-  background: papayawhip;
-  padding: 2rem 0;
+  background: #F8B88B;
+  padding: 2rem 1rem;
   font-weight: 700;
   cursor: pointer;
-  color: black;
   border-radius: 5px;
   outline: 0;
   text-transform: uppercase;
-  margin: 5px 0px;
   box-shadow: 0px 2px 2px lightgray;
   transition: ease background-color 250ms;
   &:disabled {

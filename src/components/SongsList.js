@@ -18,11 +18,9 @@ export const SongsList = () => {
     <article className="post-excerpt" key={song.id}>
       <h3>{song.title}</h3>
       <div>
-        <SongAuthor userId={song.user} />
         <TimeAgo timestamp={song.date} />
       </div>
       <p className="post-content">{song.lyric.substring(0, 100)}</p>
-      <ReactionButtons song={song} />
       <Link to={`/songs/${song.id}`} className="button muted-button">
         View Song
       </Link>

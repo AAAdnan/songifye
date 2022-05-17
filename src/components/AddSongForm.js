@@ -6,8 +6,6 @@ import { songAdded} from '../features/songs/songsSlice'
 export const AddSongForm = () => {
   const [title, setTitle] = useState('')
   const [lyric, setLyric] = useState('')
-  const [userId, setUserId] = useState('')
-
 
   const dispatch = useDispatch()
 
@@ -19,36 +17,36 @@ export const AddSongForm = () => {
   const onLyricChanged = e => setLyric(e.target.value)
 
   const onSaveSongClicked = () => {
-    if (title && lyric) {
-      dispatch(songAdded(title, lyric, userId))
+    if (title && lyric && user) {
+      dispatch(songAdded(title, lyric, user))
       setTitle('')
       setLyric('')
     }
   }
 
-  const canSave = Boolean(title) && Boolean(lyric) && Boolean(userId)
+  const canSave = Boolean(title) && Boolean(lyric) && Boolean(user)
 
   return (
     <Wrapper>
       <Title>Add a New Song</Title>
       <Form>
             <SongTitleDiv>
-                <label htmlFor="songTitle">Song Title:</label>
-                    <input
+                <Label htmlFor="songTitle">Song Title:</Label>
+                    <Input
                         type="text"
                         id="songTitle"
                         name="songTitle"
                         value={title}
                         onChange={onTitleChanged}
-                />
+                    />
             </SongTitleDiv>
             <AuthorDiv>
-                <label htmlFor="songAuthor">Author:</label>
+                <Label htmlFor="songAuthor">Author:</Label>
                 <div>{users && user}</div>
             </AuthorDiv>
             <LyricDiv>
-                <label htmlFor="songContent">Lyrics:</label>
-                <textarea
+                <Label htmlFor="songContent">Lyrics:</Label>
+                <TextArea
                     id="songLyric"
                     name="songLyric"
                     value={lyric}
@@ -92,20 +90,38 @@ const Title = styled.h2`
 
 const Form = styled.form`
     display: flex;
+    text: arial;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start:    
     min-height: 1000px;
-    width: 50%; 
+    width: 75%;
+    border-style: solid; 
+    border-color: #F8B88B;
+
 `
 
 const SongTitleDiv = styled.div`
-    display: flex
-    flex-direction: column;
+    display: flex;
+    margin-top: 20px;
+`
+
+const Label = styled.label`
+    padding: 10px;
+`
+
+const Input = styled.input`
+    width: 75%;
+`
+
+const TextArea = styled.textarea`
+    width: 75%;
+    min-height: 1000px;
 `
 
 const AuthorDiv = styled.div`
-    display: flex
+    display: flex;
+    margin: 20px 10px 20px 10px;
 `
 
 const LyricDiv = styled.div`
@@ -114,7 +130,7 @@ const LyricDiv = styled.div`
 
 const Button = styled.button`
   background-color: ${(props) => theme[props.theme].default};
-  margin: auto;
+  cursor: pointer;
   width: 25%;
   color: white;
   padding: 5px 15px;
@@ -122,17 +138,16 @@ const Button = styled.button`
   outline: 0;
   text-transform: uppercase;
   margin: 5px 0px;
-  cursor: pointer;
   box-shadow: 0px 2px 2px lightgray;
   transition: ease background-color 250ms;
   &:hover {
     background-color: ${(props) => theme[props.theme].hover};
   }
   &:disabled {
-    cursor: default;
     opacity: 0.7;
   }
-  margin-top: 20px;
+  margin: 20px 0px 20px 0px;
+  align-self: center;
 `;
 
 Button.defaultProps = {

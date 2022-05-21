@@ -2,11 +2,15 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 import { songAdded} from '../features/songs/songsSlice'
-import { Redirect, Route, useNavigate, Link } from "react-router-dom";
+import { Redirect, Route, useNavigate } from "react-router-dom";
+import { createSong } from '../configs/firebaseConfig'
 
-export const AddSongForm = () => {
+
+export const AddSongFormTest = () => {
   const [title, setTitle] = useState('')
   const [lyric, setLyric] = useState('')
+  const [ error, setError ] = useState();
+
 
   const dispatch = useDispatch()
   let navigate = useNavigate();
@@ -20,10 +24,17 @@ export const AddSongForm = () => {
 
   const onSaveSongClicked = () => {
     if (title && lyric && user) {
-      dispatch(songAdded(title, lyric, user))
-      setTitle('')
-      setLyric('')
-      navigate("/songs");
+    //   dispatch(songAdded(title, lyric, user))
+
+    createSong(user, title, lyric)
+        .then(docRef => {
+            onCreate(docRef.id, user, title, lyric);
+            setTitle('')
+            setLyric('')
+        })
+        .catch(reason => setError(reason))
+   
+    //   navigate("/songs");
     }
   }
 
@@ -59,9 +70,6 @@ export const AddSongForm = () => {
           <Button type="button" onClick={onSaveSongClicked} disabled={!canSave}>
             Save Song
           </Button>
-          {user && <Link to="/WriteSongTest">
-          Test
-          </Link>}
       </Form>
     </Wrapper>
   )

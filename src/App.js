@@ -8,12 +8,18 @@ import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { saveUser } from '../src/features/auth/authSlice'
 
+import {
+  ReactReduxFirebaseProvider,
+  firebaseReducer
+} from 'react-redux-firebase'
+
 import ProtectedRoute from './services/ProtectedRoute';
 
 import DashboardPage from './pages/DashboardPage'
 import SongsPage from './pages/SongsPage'
 import SingleSongPage from './pages/SingleSongPage'
 import CreateSongPage from './pages/CreateSongPage'
+import WriteSongPage from './pages/WriteSongPage'
 import EditSongPage  from './pages/EditSongPage'
 import LyricsSearchFormPage from './pages/LyricsSearchFormPage'
 import Login from './pages/auth/Login'
@@ -22,6 +28,8 @@ import Reset from './pages/auth/Reset'
 import Pokemon from './pages/Pokemon'
 import { Navbar } from './components/Navbar'
 import Secret from './pages/protected/Secret'
+
+const fbConfig = {}
 
 
 
@@ -53,6 +61,7 @@ const App = () => {
         <Route exact path="Songs" element={<SongsPage/>} />
         <Route exact path="Songs/:id" element={<SingleSongPage />} />
         <Route exact path="WriteSong" element={<CreateSongPage />} />
+        <Route exact path="WriteSongTest" element={<WriteSongPage />} />
         <Route exact path="editSong/:id" element={<EditSongPage />} />
         <Route exact path="LyricSearch" element={<LyricsSearchFormPage />} />
         <Route exact path ="Pokemon" element={<Pokemon />} />

@@ -6,6 +6,8 @@ import usersReducer from '../features/users/usersSlice'
 import authReducer from '../features/auth/authSlice'
 import { pokemonApi } from '../services/pokemon';
 import { lyricsApi } from '../services/lyrics';
+import { firebaseReducer } from 'react-redux-firebase'
+
 
 
 export const store = configureStore({
@@ -14,6 +16,7 @@ export const store = configureStore({
     users: usersReducer,
     auth: authReducer,
     lyrics: lyricsReducer,
+    firebase: firebaseReducer,
     [pokemonApi.reducerPath]: pokemonApi.reducer,
     [lyricsApi.reducerPath]: lyricsApi.reducer
   },

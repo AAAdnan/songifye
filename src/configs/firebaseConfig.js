@@ -6,6 +6,22 @@ import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+import { 
+    getFirestore,
+    query,
+    orderBy,
+    onSnapshot,
+    collection,
+    getDoc, 
+    getDocs, 
+    addDoc,
+    updateDoc,
+    doc, 
+    serverTimestamp, 
+    arrayUnion
+} from "firebase/firestore";
+
 export const firebaseConfig = {
   apiKey: "AIzaSyBSjfCRBi1pMDKFYWR5bbF9QEjZmW3QUQg",
   authDomain: "songify-72495.firebaseapp.com",
@@ -19,3 +35,25 @@ export const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+export const db = getFirestore(app);
+
+export const createSong = (user, title, lyric) => {
+    const songsColRef = collection(db, 'songs')
+    return addDoc(songsColRef, {
+            created: serverTimestamp(),
+            createdBy: user,
+            title,
+            lyric
+        });
+};
+
+export const getSongList = (songListId) => {
+    const songDocRef = doc(db, 'songs', songListId)
+    return getDoc(songDocRef);
+};
+
+export const getSongListItems = (songListId) => {
+    const itemsColRef = collection(db, 'songs', songListId, 'items')
+    return getDocs(itemsColRef)
+}
+

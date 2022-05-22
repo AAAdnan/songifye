@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 import { songAdded} from '../features/songs/songsSlice'
 import { Redirect, Route, useNavigate } from "react-router-dom";
-import { createSong } from '../configs/firebaseConfig'
+import * as FirestoreService from '../configs/firebaseConfig'
 
 
 export const AddSongFormTest = () => {
@@ -26,11 +26,9 @@ export const AddSongFormTest = () => {
     if (title && lyric && user) {
     //   dispatch(songAdded(title, lyric, user))
 
-    createSong(user, title, lyric)
+    FirestoreService.createSong(user, title, lyric)
         .then(docRef => {
-            onCreate(docRef.id, user, title, lyric);
-            setTitle('')
-            setLyric('')
+           console.log(docRef)
         })
         .catch(reason => setError(reason))
    

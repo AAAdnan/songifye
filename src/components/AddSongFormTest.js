@@ -1,42 +1,64 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 import { songAdded} from '../features/songs/songsSlice'
 import { Redirect, Route, useNavigate } from "react-router-dom";
 import * as FirestoreService from '../configs/firebaseConfig'
-
+import {db} from '../configs/firebaseConfig'
+import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot} from 'firebase/firestore'
 
 export const AddSongFormTest = () => {
   const [title, setTitle] = useState('')
   const [lyric, setLyric] = useState('')
-  const [ error, setError ] = useState();
-
+  const [songs, setSongs] = useState('')
+  const [error, setError] = useState();
 
   const dispatch = useDispatch()
   let navigate = useNavigate();
 
+  useEffect(() => {
+    const q = query(collection(db, 'songs'), orderBy('created', 'desc'))
+    onSnapshot(q, (querySnapshot) => {
+      setSongs(querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        data: doc.data()
+      })))
+    })
+  },[])
+
+  console.log(songs)
+
   const users = useSelector(state => state.users)
 
-  const user = users.email
+  let author
+
+  if(users.length > 0) {
+       author = users.email
+  } else {  
+       author = 'Unknown Author'
+  }
+
+  console.log(author)
+
 
   const onTitleChanged = e => setTitle(e.target.value)
   const onLyricChanged = e => setLyric(e.target.value)
 
-  const onSaveSongClicked = () => {
-    if (title && lyric && user) {
-    //   dispatch(songAdded(title, lyric, user))
+  const songsColRef = collection(db, 'songs')
 
-    FirestoreService.createSong(user, title, lyric)
-        .then(docRef => {
-           console.log(docRef)
-        })
-        .catch(reason => setError(reason))
-   
-    //   navigate("/songs");
-    }
+  const onSaveSongClicked = async (e) => {
+      e.preventDefault()
+        try {
+            await addDoc(songsColRef, {
+            created: serverTimestamp(),
+            createdBy: author,
+            title,
+            lyric
+            })
+        } catch(err) {
+            alert(err)
+        }
   }
-
-  const canSave = Boolean(title) && Boolean(lyric) && Boolean(user)
 
   return (
     <Wrapper>
@@ -54,7 +76,7 @@ export const AddSongFormTest = () => {
             </SongTitleDiv>
             <AuthorDiv>
                 <Label htmlFor="songAuthor">Author:</Label>
-                <div>{users && user}</div>
+                <div>{users && author}</div>
             </AuthorDiv>
             <LyricDiv>
                 <Label htmlFor="songContent">Lyrics:</Label>
@@ -65,10 +87,17 @@ export const AddSongFormTest = () => {
                     onChange={onLyricChanged}
                 />
             </LyricDiv>
-          <Button type="button" onClick={onSaveSongClicked} disabled={!canSave}>
+          <Button type="button" onClick={onSaveSongClicked} >
             Save Song
           </Button>
       </Form>
+      <div>Songs List</div>
+      {songs.map((song) =>(
+          <>
+          <h2>{song.data.title}</h2>
+          <div>{song.data.lyric}</div>
+          </>
+      ))}
     </Wrapper>
   )
 }

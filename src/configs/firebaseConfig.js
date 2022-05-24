@@ -18,7 +18,7 @@ import {
     addDoc,
     updateDoc,
     doc, 
-    serverTimestamp, 
+    serverTimestamp,    
     arrayUnion
 } from "firebase/firestore";
 
@@ -37,8 +37,9 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 
+const songsColRef = collection(db, 'songs')
+
 export const createSong = (user, title, lyric) => {
-    const songsColRef = collection(db, 'songs')
     return addDoc(songsColRef, {
             created: serverTimestamp(),
             createdBy: user,
@@ -47,13 +48,9 @@ export const createSong = (user, title, lyric) => {
         });
 };
 
-export const getSongList = (songListId) => {
-    const songDocRef = doc(db, 'songs', songListId)
-    return getDoc(songDocRef);
+export const getSongs = () => {
+    const itemsQuery = query(songsColRef, orderBy('created'))
+
+    return onSnapshot(itemsQuery);
+
 };
-
-export const getSongListItems = (songListId) => {
-    const itemsColRef = collection(db, 'songs', songListId, 'items')
-    return getDocs(itemsColRef)
-}
-

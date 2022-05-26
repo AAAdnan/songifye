@@ -5,7 +5,8 @@ import { songAdded} from '../features/songs/songsSlice'
 import { Redirect, Route, useNavigate } from "react-router-dom";
 import * as FirestoreService from '../configs/firebaseConfig'
 import {db} from '../configs/firebaseConfig'
-import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot} from 'firebase/firestore'
+import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc} from 'firebase/firestore'
+import { identifier } from '@babel/types';
 
 export const AddSongFormTest = () => {
   const [title, setTitle] = useState('')
@@ -27,6 +28,8 @@ export const AddSongFormTest = () => {
   },[])
 
   console.log(songs)
+
+  let _this = this
 
   const users = useSelector(state => state.users)
 
@@ -60,6 +63,16 @@ export const AddSongFormTest = () => {
         }
   }
 
+  const handleDelete = async (id) => {
+    const taskDocRef = doc(songsColRef, id)
+    try{
+      await deleteDoc(taskDocRef)
+    } catch (err) {
+      alert(err)
+    }
+  }
+
+
   return (
     <Wrapper>
       <Title>Add a New Song</Title>
@@ -87,20 +100,24 @@ export const AddSongFormTest = () => {
                     onChange={onLyricChanged}
                 />
             </LyricDiv>
-          <Button type="button" onClick={onSaveSongClicked} >
+          <Button type="button" onClick={onSaveSongClicked()} >
             Save Song
           </Button>
       </Form>
       <div>Songs List</div>
-      {songs.map((song) =>(
-          <>
-          <h2>{song.data.title}</h2>
-          <div>{song.data.lyric}</div>
-          </>
+      {songs && songs.map((song) =>(
+          <div key={song.id}>
+            <h2 >{song.data.title}</h2>
+            <div>{song.data.lyric}</div>
+            <div>Edit</div>
+            <div onClick={() => handleDelete(song.id)}>Delete</div>
+          </div>
       ))}
     </Wrapper>
   )
 }
+
+
 
 const theme = {
     blue: {

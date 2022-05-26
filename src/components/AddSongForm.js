@@ -59,9 +59,9 @@ export const AddSongForm = () => {
           <Button type="button" onClick={onSaveSongClicked} disabled={!canSave}>
             Save Song
           </Button>
-          {user && <Link to="/WriteSongTest">
+          <Link to="/WriteSongTest">
           Test
-          </Link>}
+          </Link>
       </Form>
     </Wrapper>
   )

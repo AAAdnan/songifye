@@ -48,9 +48,13 @@ export const createSong = (user, title, lyric) => {
         });
 };
 
-export const getSongs = () => {
-    const itemsQuery = query(songsColRef, orderBy('created'))
+export const getSongs = () => {  
+    const q = query(collection(db, 'songs'), orderBy('created', 'desc'))
 
-    return onSnapshot(itemsQuery);
-
-};
+    return onSnapshot(q, (querySnapshot) => {
+          (querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                data: doc.data()
+        })))
+    })
+}

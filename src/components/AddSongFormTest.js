@@ -3,16 +3,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 import { songAdded} from '../features/songs/songsSlice'
 import { Redirect, Route, useNavigate } from "react-router-dom";
-import * as FirestoreService from '../configs/firebaseConfig'
 import {db} from '../configs/firebaseConfig'
 import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc} from 'firebase/firestore'
 import { identifier } from '@babel/types';
+import * as FirestoreService from '../configs/firebaseConfig'
+
 
 export const AddSongFormTest = () => {
   const [title, setTitle] = useState('')
   const [lyric, setLyric] = useState('')
   const [songs, setSongs] = useState('')
   const [error, setError] = useState();
+  const [firebaseSongs, setFirebaseSongs] = useState([])
 
   const dispatch = useDispatch()
   let navigate = useNavigate();
@@ -27,9 +29,11 @@ export const AddSongFormTest = () => {
     })
   },[])
 
-  console.log(songs)
+  useEffect(() => {
+    setFirebaseSongs(FirestoreService.getSongs())
+  }, [])
 
-  let _this = this
+  console.log(firebaseSongs)
 
   const users = useSelector(state => state.users)
 
@@ -42,7 +46,6 @@ export const AddSongFormTest = () => {
   }
 
   console.log(author)
-
 
   const onTitleChanged = e => setTitle(e.target.value)
   const onLyricChanged = e => setLyric(e.target.value)
@@ -100,7 +103,7 @@ export const AddSongFormTest = () => {
                     onChange={onLyricChanged}
                 />
             </LyricDiv>
-          <Button type="button" onClick={onSaveSongClicked()} >
+          <Button type="button" onClick={onSaveSongClicked} >
             Save Song
           </Button>
       </Form>

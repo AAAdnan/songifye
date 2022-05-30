@@ -7,23 +7,30 @@ import { Redirect, Route, useNavigate, Link } from "react-router-dom";
 export const AddSongForm = () => {
   const [title, setTitle] = useState('')
   const [lyric, setLyric] = useState('')
+  const [user, setUser ] = useState('Unknown Author')
 
   const dispatch = useDispatch()
   let navigate = useNavigate();
 
   const users = useSelector(state => state.users)
 
-  const user = users.email
+  if(users.length > 0) {
+       setUser(users.email)
+  } 
 
   const onTitleChanged = e => setTitle(e.target.value)
   const onLyricChanged = e => setLyric(e.target.value)
 
   const onSaveSongClicked = () => {
     if (title && lyric && user) {
+      console.log('click')
       dispatch(songAdded(title, lyric, user))
       setTitle('')
       setLyric('')
       navigate("/songs");
+    }
+    else {
+      console.log('error')
     }
   }
 
@@ -45,7 +52,7 @@ export const AddSongForm = () => {
             </SongTitleDiv>
             <AuthorDiv>
                 <Label htmlFor="songAuthor">Author:</Label>
-                <div>{users && user}</div>
+                <Div>{users && user}</Div>
             </AuthorDiv>
             <LyricDiv>
                 <Label htmlFor="songContent">Lyrics:</Label>
@@ -94,7 +101,7 @@ const Title = styled.h2`
     color: #F8B88B
 `;
 
-const Form = styled.form`
+const Form = styled.div`
     display: flex;
     text: arial;
     flex-direction: column;
@@ -106,9 +113,15 @@ const Form = styled.form`
     border-color: #F8B88B;
 `
 
+const Div = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`
+
 const SongTitleDiv = styled.div`
     display: flex;
-    margin-top: 20px;
+    margin: 20px 10px 20px 10px;
 `
 
 const Label = styled.label`
@@ -121,16 +134,20 @@ const Input = styled.input`
 
 const TextArea = styled.textarea`
     width: 75%;
+    text: arial;
     min-height: 1000px;
 `
 
 const AuthorDiv = styled.div`
     display: flex;
     margin: 20px 10px 20px 10px;
+    align-content: baseline;
 `
 
 const LyricDiv = styled.div`
-    display: flex
+    display: flex;
+    margin: 20px 10px 20px 10px;
+
 `
 
 const Button = styled.button`

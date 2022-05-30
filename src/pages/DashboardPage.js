@@ -13,7 +13,7 @@ const DashboardPage = () => {
     return (
         <Wrapper>
             <Title>Profile</Title>
-            <p>Welcome {user}</p>
+            <Paragraph>Welcome {user && user}</Paragraph>
             <Div>
                 <Button>
                     <Link to="/songs">
@@ -42,6 +42,10 @@ const Wrapper = styled.section`
     min-height: 100vh;
 `;
 
+const Paragraph = styled.p`
+ color: salmon;
+`
+
 const Title = styled.h2`
     font-size: 3.5em;
     font-weight: bold;
@@ -53,13 +57,13 @@ const Div = styled.div`
     width: 50%;
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    padding: 10px;
 `
 
 
 const Button = styled.button`
   background: #F8B88B;
-  padding: 2rem 1rem;
+  padding: 1rem 1rem;
   font-weight: 700;
   cursor: pointer;
   border-radius: 5px;

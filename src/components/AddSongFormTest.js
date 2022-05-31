@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 import { songAdded} from '../features/songs/songsSlice'
 import { Redirect, Route, useNavigate } from "react-router-dom";
-import {db} from '../configs/firebaseConfig'
+import {db, getSongs, handleDelete, onSaveSongClicked} from '../configs/firebaseConfig'
 import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc} from 'firebase/firestore'
 import { identifier } from '@babel/types';
 import * as FirestoreService from '../configs/firebaseConfig'
@@ -15,12 +15,13 @@ export const AddSongFormTest = () => {
   const [songs, setSongs] = useState('')
   const [error, setError] = useState();
   const [firebaseSongs, setFirebaseSongs] = useState([])
+  const [user, setUser] = useState('')
 
   const dispatch = useDispatch()
   let navigate = useNavigate();
 
   useEffect(() => {
-    const q = query(collection(db, 'songs'), orderBy('created', 'desc'))
+    const q = query(collection(db, 'songs'), orderBy('date', 'desc'))
     onSnapshot(q, (querySnapshot) => {
       setSongs(querySnapshot.docs.map(doc => ({
         id: doc.id,
@@ -29,53 +30,16 @@ export const AddSongFormTest = () => {
     })
   },[])
 
-  useEffect(() => {
-    setFirebaseSongs(FirestoreService.getSongs())
-  }, [])
-
-  console.log(firebaseSongs)
-
   const users = useSelector(state => state.users)
 
-  let author
+  useEffect(() => {
+    users && users.length ? setUser(users.email) : setUser('Unknown Author')
+  }, [users])
 
-  if(users.length > 0) {
-       author = users.email
-  } else {  
-       author = 'Unknown Author'
-  }
-
-  console.log(author)
 
   const onTitleChanged = e => setTitle(e.target.value)
   const onLyricChanged = e => setLyric(e.target.value)
-
-  const songsColRef = collection(db, 'songs')
-
-  const onSaveSongClicked = async (e) => {
-      e.preventDefault()
-        try {
-            await addDoc(songsColRef, {
-            created: serverTimestamp(),
-            createdBy: author,
-            title,
-            lyric
-            })
-        } catch(err) {
-            alert(err)
-        }
-  }
-
-  const handleDelete = async (id) => {
-    const taskDocRef = doc(songsColRef, id)
-    try{
-      await deleteDoc(taskDocRef)
-    } catch (err) {
-      alert(err)
-    }
-  }
-
-
+  
   return (
     <Wrapper>
       <Title>Add a New Song</Title>
@@ -92,7 +56,7 @@ export const AddSongFormTest = () => {
             </SongTitleDiv>
             <AuthorDiv>
                 <Label htmlFor="songAuthor">Author:</Label>
-                <div>{users && author}</div>
+                <div>{users && user}</div>
             </AuthorDiv>
             <LyricDiv>
                 <Label htmlFor="songContent">Lyrics:</Label>
@@ -103,7 +67,7 @@ export const AddSongFormTest = () => {
                     onChange={onLyricChanged}
                 />
             </LyricDiv>
-          <Button type="button" onClick={onSaveSongClicked} >
+          <Button type="button" onClick={() => onSaveSongClicked(user, title , lyric)} >
             Save Song
           </Button>
       </Form>
@@ -149,7 +113,7 @@ const Title = styled.h2`
     color: #F8B88B
 `;
 
-const Form = styled.form`
+const Form = styled.div`
     display: flex;
     text: arial;
     flex-direction: column;

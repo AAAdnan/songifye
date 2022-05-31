@@ -28,6 +28,9 @@ import Reset from './pages/auth/Reset'
 import Pokemon from './pages/Pokemon'
 import { Navbar } from './components/Navbar'
 import Secret from './pages/protected/Secret'
+import EditSongPageTest  from './pages/EditSongPageTest'
+
+
 
 const fbConfig = {}
 
@@ -62,6 +65,7 @@ const App = () => {
         <Route exact path="Songs/:id" element={<SingleSongPage />} />
         <Route exact path="WriteSong" element={<CreateSongPage />} />
         <Route exact path="WriteSongTest" element={<WriteSongPage />} />
+        <Route exact path="EditSongPageTest" element={<EditSongPageTest />} />
         <Route exact path="editSong/:id" element={<EditSongPage />} />
         <Route exact path="LyricSearch" element={<LyricsSearchFormPage />} />
         <Route exact path ="Pokemon" element={<Pokemon />} />

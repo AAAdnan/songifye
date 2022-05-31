@@ -1,17 +1,37 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { TimeAgo } from '../features/songs/TimeAgo'
 import { SongAuthor } from '../features/songs/SongAuthor'
 import styled from 'styled-components/macro'
+import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc} from 'firebase/firestore'
+import {db, handleDelete} from '../configs/firebaseConfig'
 
 export const SongsList = () => {
+
+  const [firebaseSongs, setFirebaseSongs] = useState('')
+
+  useEffect(() => {
+    const q = query(collection(db, 'songs'), orderBy('date', 'desc'))
+    onSnapshot(q, (querySnapshot) => {
+      setFirebaseSongs(querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        data: doc.data()
+      })))
+    })
+    
+  }, [])
+
+
+  console.log(firebaseSongs)
 
   const songs = useSelector(state => state.songs)
 
   const orderedSongs = songs
     .slice()
     .sort((a, b) => b.date.localeCompare(a.date))
+
+    console.log(firebaseSongs)
 
   const renderedSongs = orderedSongs.map(song => (
     <article className="post-excerpt" key={song.id}>
@@ -26,11 +46,25 @@ export const SongsList = () => {
       </Link>
     </article>
   ))
+   
 
   return (
     <Wrapper className="posts-list">
       <Title>Songs</Title>
       {renderedSongs}
+      {firebaseSongs && firebaseSongs.map((song) =>(
+        <div key={song.id}>
+          <h3>{song.data.title}</h3>
+          <p className="post-content">{song.data.lyric.substring(0, 100)}</p>
+          <div>{song.data.lyric}</div>
+          <SongAuthor userId={song.data.createdBy} />
+          <div className="button muted-button">Edit</div>
+          <div className="button muted-button" onClick={() => handleDelete(song.id)}>Delete</div>
+          <Link to={`/songs/${song.id}`} className="button muted-button">
+            View Song
+          </Link>
+        </div>
+    ))}
     </Wrapper>
   )
 }

@@ -6,7 +6,7 @@ import { songUpdated } from '../features/songs/songsSlice'
 import { useParams, Link } from 'react-router-dom';
 
 
-export const EditSongForm = () => {
+export const EditSongFormTest = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -61,36 +61,6 @@ export const EditSongForm = () => {
             </Link> 
         </Button>
       </Form>
-      <Form>
-      <SongTitleDiv>
-          <Label htmlFor="songTitle">Song Title:</Label>
-          <Input
-              type="text"
-              id="songTitle"
-              name="songTitle"
-              placeholder="What's on your mind?"
-              value={title}
-              onChange={onTitleChanged}
-          />
-      </SongTitleDiv>
-      <LyricDiv>
-          <Label htmlFor="songLyric">Lyric:</Label>
-          <TextArea
-              id="songLyric"
-              name="songLyric"
-              value={lyric}
-              onChange={onLyricChanged}
-          />
-      </LyricDiv>
-      <Button type="button" onClick={onSaveSongClicked}>
-           Save Song
-      </Button>
-      <Button type="button" onClick={onSaveSongClicked}>
-          <Link to={'/songs'}>
-              Back  
-          </Link> 
-      </Button>
-    </Form>
     </Wrapper>
   )
 }

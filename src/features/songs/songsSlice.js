@@ -36,7 +36,7 @@ const initialState = [
                   date: new Date().toISOString(),
                   title,
                   lyric,
-                  user: user
+                  createdBy: user
                 }
               }
             }
@@ -49,13 +49,6 @@ const initialState = [
               existingSong.lyric = lyric
             }
           },
-          reactionAdded(state, action) {
-            const { songId, reaction } = action.payload 
-            const existingSong = state.find(song => song.id === songId)
-            if (existingSong) {
-              existingSong.reactions[reaction]++
-            }
-          }
     }
   })
 

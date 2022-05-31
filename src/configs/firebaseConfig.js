@@ -19,7 +19,8 @@ import {
     updateDoc,
     doc, 
     serverTimestamp,    
-    arrayUnion
+    arrayUnion,
+    deleteDoc
 } from "firebase/firestore";
 
 export const firebaseConfig = {
@@ -49,12 +50,39 @@ export const createSong = (user, title, lyric) => {
 };
 
 export const getSongs = () => {  
-    const q = query(collection(db, 'songs'), orderBy('created', 'desc'))
 
-    return onSnapshot(q, (querySnapshot) => {
-          (querySnapshot.docs.map(doc => ({
+    const q = query(collection(db, 'songs'), orderBy('created', 'desc'))
+    
+    onSnapshot(q, (querySnapshot) => {
+        let data = querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 data: doc.data()
-        })))
+        }))
+
+    console.log(data);
+
     })
+}
+
+export const handleDelete = async (id) => {
+
+    const taskDocRef = doc(songsColRef, id)
+    try {
+        await deleteDoc(taskDocRef)
+    } catch (err) {
+        alert(err)
+    }
+}
+
+export const onSaveSongClicked = async (user, title, lyric) => {
+    try {
+        await addDoc(songsColRef, {
+        date: serverTimestamp(),
+        createdBy: user,
+        title: title,
+        lyric: lyric
+        })
+    } catch(err) {
+        alert(err)
+    }
 }

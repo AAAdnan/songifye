@@ -12,7 +12,14 @@ const DashboardPage = () => {
 
     const lyrics = useSelector(selectSongLyric)
 
+
     console.log(lyrics)
+
+    let newArray = lyrics.filter((el) => {
+        return el.artist.length > 0 
+    })
+
+    console.log(newArray)
     
     return (
         <Wrapper>

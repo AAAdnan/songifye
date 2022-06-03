@@ -1,17 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { getAuth, signOut } from "firebase/auth";
+import { auth, signOut } from '../configs/firebaseConfig'
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-
-const auth = getAuth();
+import { selectUser } from '../features/users/usersSlice'
+import { logout } from '../features/users/usersSlice'
 
 export const Navbar = () => {
 
     let navigate = useNavigate();
     
-    const user = useSelector((state) => state.auth.value);
+    const user = useSelector(selectUser);
+
+    const dispatch = useDispatch();
+
 
     return (
     <nav>
@@ -40,6 +42,7 @@ export const Navbar = () => {
         {user && <Link
             to="#"
             onClick={() => {
+                dispatch(logout());
                 signOut(auth)
                 .then(() => {
                     navigate("/login")

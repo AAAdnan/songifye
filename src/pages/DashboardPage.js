@@ -2,18 +2,22 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
+import { selectUser } from '../features/users/usersSlice'
+import { selectSongLyric } from '../features/lyrics/lyricsSlice'
 
 
 const DashboardPage = () => {
 
-    const users = useSelector(state => state.users)
+    const user = useSelector(selectUser)
 
-    const user = users.email
+    const lyrics = useSelector(selectSongLyric)
+
+    console.log(lyrics)
     
     return (
         <Wrapper>
             <Title>Profile</Title>
-            <Paragraph>Welcome {user && user}</Paragraph>
+            <Paragraph>Welcome {user && user.displayName}</Paragraph>
             <Div>
                 <Button>
                     <Link to="/songs">

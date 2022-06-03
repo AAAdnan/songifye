@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, createUserWithEmailAndPassword,  updateProfile, signInWithEmailAndPassword,} from '../../configs/firebaseConfig';
 import styled from 'styled-components/macro'
 import { useSelector, useDispatch } from "react-redux";
+import { login } from '../../features/users/usersSlice'
 import { saveUserDetails } from "../../features/users/usersSlice";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import Modal from "../../components/Modal/modal"
+
 
 
 
@@ -15,20 +17,33 @@ const Register = () => {
   let navigate = useNavigate();
 
   const [email, setEmail] = useState("");
+  const [name, setName] = useState('');
   const [password, setPassword] = useState("");
+  const [profilePic, setProfilePic] = useState('');
   const [active, setActive] = useState(false);
   const [errorMessage, setErrorMessage] = useState("")
 
 
   const dispatch = useDispatch();
-  const auth = getAuth();
 
   const handleRegister = () => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("Registered user: ", user);
-        dispatch(saveUserDetails(user.email))
+      .then((userAuth) => {
+        updateProfile(userAuth.user, {
+          displayName: name,
+          photoURL: profilePic,
+        })
+        .then(
+          // Dispatch the user information for persistence in the redux state
+          dispatch(
+            login({
+              email: userAuth.user.email,
+              uid: userAuth.user.uid,
+              displayName: name,
+              photoUrl: profilePic,
+            })
+          )
+        )
         setEmail("");
         setPassword("");
         navigate("/");
@@ -43,17 +58,35 @@ const Register = () => {
       });
   };
 
-  const canSave = Boolean(email) && Boolean(password)
+  const canSave = Boolean(name) && Boolean(email) && Boolean(password)
 
   return (
     <Wrapper>
       <Title>Register</Title>
+      Name
+      <br />
+      <Input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder='Full name (required for registering)'
+        type='text'
+      />
+      <br />
       Email:
       <br />
       <Input
         type="text"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+      />
+      <br />
+      Profile Picture
+      <br />
+      <Input
+        value={profilePic}
+        onChange={(e) => setProfilePic(e.target.value)}
+        placeholder='Profile picture URL (optional)'
+      type='text'
       />
       <br />
       Password:

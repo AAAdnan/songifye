@@ -13,12 +13,15 @@ export const SongsList = () => {
 
   useEffect(() => {
     const q = query(collection(db, 'songs'), orderBy('date', 'desc'))
-    onSnapshot(q, (querySnapshot) => {
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
       setFirebaseSongs(querySnapshot.docs.map(doc => ({
         id: doc.id,
         data: doc.data()
       })))
     })
+
+    return unsubscribe;
     
   }, [])
 

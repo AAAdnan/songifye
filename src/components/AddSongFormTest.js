@@ -5,6 +5,7 @@ import { songAdded} from '../features/songs/songsSlice'
 import { Redirect, Route, useNavigate } from "react-router-dom";
 import {db, getSongs, handleDelete, onSaveSongClicked} from '../configs/firebaseConfig'
 import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc} from 'firebase/firestore'
+import { selectUser } from '../features/users/usersSlice'
 import { identifier } from '@babel/types';
 import * as FirestoreService from '../configs/firebaseConfig'
 
@@ -15,10 +16,11 @@ export const AddSongFormTest = () => {
   const [songs, setSongs] = useState('')
   const [error, setError] = useState();
   const [firebaseSongs, setFirebaseSongs] = useState([])
-  const [user, setUser] = useState('')
 
   const dispatch = useDispatch()
   let navigate = useNavigate();
+
+  const user = useSelector(selectUser)
 
   useEffect(() => {
     const q = query(collection(db, 'songs'), orderBy('date', 'desc'))
@@ -29,13 +31,6 @@ export const AddSongFormTest = () => {
       })))
     })
   },[])
-
-  const users = useSelector(state => state.users)
-
-  useEffect(() => {
-    users && users.length ? setUser(users.email) : setUser('Unknown Author')
-  }, [users])
-
 
   const onTitleChanged = e => setTitle(e.target.value)
   const onLyricChanged = e => setLyric(e.target.value)
@@ -56,7 +51,7 @@ export const AddSongFormTest = () => {
             </SongTitleDiv>
             <AuthorDiv>
                 <Label htmlFor="songAuthor">Author:</Label>
-                <div>{users && user}</div>
+                <div>{user.displayName}</div>
             </AuthorDiv>
             <LyricDiv>
                 <Label htmlFor="songContent">Lyrics:</Label>

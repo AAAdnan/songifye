@@ -2,21 +2,17 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 import { songAdded} from '../features/songs/songsSlice'
+import { selectUser } from '../features/users/usersSlice'
 import { Redirect, Route, useNavigate, Link } from "react-router-dom";
 
 export const AddSongForm = () => {
   const [title, setTitle] = useState('')
   const [lyric, setLyric] = useState('')
-  const [user, setUser ] = useState('Unknown Author')
 
   const dispatch = useDispatch()
   let navigate = useNavigate();
 
-  const users = useSelector(state => state.users)
-
-  if(users.length > 0) {
-       setUser(users.email)
-  } 
+  const user = useSelector(selectUser)
 
   const onTitleChanged = e => setTitle(e.target.value)
   const onLyricChanged = e => setLyric(e.target.value)
@@ -52,7 +48,7 @@ export const AddSongForm = () => {
             </SongTitleDiv>
             <AuthorDiv>
                 <Label htmlFor="songAuthor">Author:</Label>
-                <Div>{users && user}</Div>
+                <Div>{user.displayName}</Div>
             </AuthorDiv>
             <LyricDiv>
                 <Label htmlFor="songContent">Lyrics:</Label>

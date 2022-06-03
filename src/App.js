@@ -1,17 +1,9 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate, Redirect } from 'react-router-dom'
 
-import { initializeApp }  from 'firebase/app';
-import { firebaseConfig } from '../src/configs/firebaseConfig'
-
-import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+import { auth, onAuthStateChanged} from '../src/configs/firebaseConfig'
+import { login, logout, selectUser } from '../src/features/users/usersSlice'
 import { useSelector, useDispatch } from "react-redux";
-import { saveUser } from '../src/features/auth/authSlice'
-
-import {
-  ReactReduxFirebaseProvider,
-  firebaseReducer
-} from 'react-redux-firebase'
 
 import ProtectedRoute from './services/ProtectedRoute';
 
@@ -30,28 +22,30 @@ import { Navbar } from './components/Navbar'
 import Secret from './pages/protected/Secret'
 import EditSongPageTest  from './pages/EditSongPageTest'
 
-
-
-const fbConfig = {}
-
-
-
 const App = () => {
 
-  initializeApp(firebaseConfig);
-  const auth = getAuth();
-  const user = useSelector((state) => state.auth.value);
-  console.log("user from state", user);
+  const user = useSelector(selectUser);
+
   const dispatch = useDispatch();
+
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispatch(saveUser(user.refreshToken));
+    onAuthStateChanged(auth, (userAuth) => {
+      if (userAuth) {
+        // user is logged in, send the user's details to redux, store the current user in the state
+        dispatch(
+          login({
+            email: userAuth.email,
+            uid: userAuth.uid,
+            displayName: userAuth.displayName,
+            photoUrl: userAuth.photoURL,
+          })
+        );
       } else {
-        dispatch(saveUser(undefined));
+        dispatch(logout());
       }
     });
-  }, [auth, dispatch]);
+  }, []);
+
 
   return (
     <Router>

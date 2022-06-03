@@ -23,6 +23,15 @@ import {
     deleteDoc
 } from "firebase/firestore";
 
+import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    updateProfile, 
+    onAuthStateChanged, 
+    signInWithEmailAndPassword, 
+    signOut 
+    } from 'firebase/auth';
+
 export const firebaseConfig = {
   apiKey: "AIzaSyBSjfCRBi1pMDKFYWR5bbF9QEjZmW3QUQg",
   authDomain: "songify-72495.firebaseapp.com",
@@ -38,7 +47,18 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 
+const auth = getAuth();
+
 const songsColRef = collection(db, 'songs')
+
+export {
+    auth,
+    createUserWithEmailAndPassword,
+    updateProfile,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut
+    }
 
 export const createSong = (user, title, lyric) => {
     return addDoc(songsColRef, {

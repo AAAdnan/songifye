@@ -7,6 +7,7 @@ import styled from 'styled-components/macro'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { saveUserDetails } from "../../features/users/usersSlice";
+import { login } from '../../features/users/usersSlice'
 
 
 const Login = () => {
@@ -28,11 +29,16 @@ let navigate = useNavigate();
 
  const signIn = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        dispatch(saveUserDetails(user.email))
+      .then((userAuth) => {
+        dispatch(
+          login({
+            email: userAuth.user.email,
+            uid: userAuth.user.uid,
+            displayName: userAuth.user.displayName,
+            photoUrl: userAuth.user.photoURL,
+          })
+        );
         navigate("/");
-        console.log("Signed in user: ", user);
     
       })
       .catch((error) => {

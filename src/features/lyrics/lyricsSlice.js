@@ -27,4 +27,6 @@ const initialState = [
 
   export const { artistAdded, songAdded } = lyricsSlice.actions
 
+  export const selectSongLyric = (state) => state.lyrics
+
   export default lyricsSlice.reducer

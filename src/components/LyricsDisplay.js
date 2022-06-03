@@ -4,9 +4,14 @@ import Table from "./Table";
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components/macro'
 import { formatRelativeWithOptions } from "date-fns/fp";
+import { useNavigate } from "react-router-dom";
+
 
 
 export const LyricsDisplay = ({ showLyricsDisplay }) => {
+
+    const dispatch = useDispatch()
+    let navigate = useNavigate();
 
     const [skipLyricSearch, setSkipLyricSearch ] = useState(false)
 
@@ -19,16 +24,6 @@ export const LyricsDisplay = ({ showLyricsDisplay }) => {
     let currentSong = songLyric.song
 
     const { data, error , isLoading } = useGetLyricsByArtistQuery({ artist: currentArtist , songTitle: currentSong }, { skip: skipLyricSearch })
-
-
-
-    // const displayLyrics = () => {
-    //     setSkipLyricSearch(!setSkipLyricSearch)
-    //     console.log(data)
-    //     console.log(data.lyrics)
-    // }
-
-    // const lyrics = data.lyrics.replace(/(\r\n|\r|\n)/g,'<br>');
 
 
     return (

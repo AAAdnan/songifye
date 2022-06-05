@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
-import { songAdded} from '../features/songs/songsSlice'
+import { songAdded } from '../features/songs/songsSlice'
 import { Redirect, Route, useNavigate } from "react-router-dom";
 import {db, getSongs, handleDelete, onSaveSongClicked} from '../configs/firebaseConfig'
 import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc} from 'firebase/firestore'
@@ -22,6 +22,12 @@ export const AddSongFormTest = () => {
 
   const user = useSelector(selectUser)
 
+
+
+  console.log(user)
+
+  console.log(songs)
+
   useEffect(() => {
     const q = query(collection(db, 'songs'), orderBy('date', 'desc'))
     onSnapshot(q, (querySnapshot) => {
@@ -34,6 +40,22 @@ export const AddSongFormTest = () => {
 
   const onTitleChanged = e => setTitle(e.target.value)
   const onLyricChanged = e => setLyric(e.target.value)
+
+
+  const onSaveReduxSongClicked = () => {
+    if (title && lyric && user) {
+      dispatch(songAdded(title, lyric, user))
+      setTitle('')
+      setLyric('')
+      navigate("/songs");
+    }
+    else {
+      console.log('error')
+    }
+  }
+
+  const canSave = Boolean(title) && Boolean(lyric) && Boolean(user)
+
   
   return (
     <Wrapper>
@@ -51,7 +73,7 @@ export const AddSongFormTest = () => {
             </SongTitleDiv>
             <AuthorDiv>
                 <Label htmlFor="songAuthor">Author:</Label>
-                <div>{user.displayName}</div>
+                <div>{user != null && user.displayName}</div>
             </AuthorDiv>
             <LyricDiv>
                 <Label htmlFor="songContent">Lyrics:</Label>
@@ -62,7 +84,7 @@ export const AddSongFormTest = () => {
                     onChange={onLyricChanged}
                 />
             </LyricDiv>
-          <Button type="button" onClick={() => onSaveSongClicked(user, title , lyric)} >
+          <Button type="button" onClick={() => onSaveSongClicked(user, title, lyric)}  disabled={!canSave} >
             Save Song
           </Button>
       </Form>

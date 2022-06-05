@@ -1,6 +1,25 @@
+import React, { useState, useEffect } from 'react'
 import { createSlice, nanoid } from '@reduxjs/toolkit'
+import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc} from 'firebase/firestore'
+import {db, getSongs, handleDelete, onSaveSongClicked} from '../../configs/firebaseConfig'
 import { sub } from 'date-fns'
 
+
+const FirebaseState = () => {
+
+  let [songs, setSongs] = useState('')
+
+  useEffect(() => {
+    const q = query(collection(db, 'songs'), orderBy('date', 'desc'))
+    onSnapshot(q, (querySnapshot) => {
+      setSongs(querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        data: doc.data()
+      })))
+    })
+  },[])
+  
+}
 
 const initialState = [
     {

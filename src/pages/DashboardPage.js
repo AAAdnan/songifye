@@ -12,9 +12,6 @@ const DashboardPage = () => {
 
     const lyrics = useSelector(selectSongLyric)
 
-
-    console.log(lyrics)
-
     let newArray = lyrics.filter((el) => {
         return el.artist.length > 0 
     })
@@ -25,6 +22,21 @@ const DashboardPage = () => {
         <Wrapper>
             <Title>Profile</Title>
             <Paragraph>Welcome {user && user.displayName}</Paragraph>
+            <SubHeader>Search History</SubHeader>
+            <Table>
+            <TableContent>
+                <TableHeading>Artist</TableHeading>
+                <TableHeading>Song Title</TableHeading>
+            </TableContent>
+            {newArray.length !==0 && newArray.map(song => (
+                <TableContent >
+                    <TableEntry key={song.id}>{song.artist}</TableEntry> 
+                    <TableEntrySong>
+                    {song.song}
+                    </TableEntrySong> 
+                </TableContent>
+            ))}
+          </Table>
             <Div>
                 <Button>
                     <Link to="/songs">
@@ -54,11 +66,18 @@ const Wrapper = styled.section`
 `;
 
 const Paragraph = styled.p`
- color: salmon;
+ color: palevioletred;
 `
 
 const Title = styled.h2`
     font-size: 3.5em;
+    font-weight: bold;
+    text-align: center;
+    color: #F8B88B
+`;
+
+const SubHeader = styled.h3`
+    font-size: 2.5em;
     font-weight: bold;
     text-align: center;
     color: #F8B88B
@@ -93,5 +112,29 @@ const Button = styled.button`
   align-self: center;
 `;
 
+const Table = styled.table`
+    margin-top: 10px;
+    margin-left:auto; 
+    margin-right:auto;
+    width: 100%;
+`
 
+const TableHeading = styled.th`
+    color: palevioletred
+`
+
+const TableContent = styled.tr`
+    color: salmon
+`
+
+const TableEntry = styled.td`
+cursor: pointer;
+`
+
+const TableEntrySong = styled.td`
+cursor: pointer;
+&:hover {
+  color: palevioletred;
+}
+`
 

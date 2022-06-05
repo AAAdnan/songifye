@@ -1,13 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 import { songAdded} from '../features/songs/songsSlice'
 import { selectUser } from '../features/users/usersSlice'
+import {db, getSongs, handleDelete, onSaveSongClicked} from '../configs/firebaseConfig'
+import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc} from 'firebase/firestore'
 import { Redirect, Route, useNavigate, Link } from "react-router-dom";
 
 export const AddSongForm = () => {
   const [title, setTitle] = useState('')
   const [lyric, setLyric] = useState('')
+  const [songs, setSongs] = useState('')
+
+  useEffect(() => {
+    const q = query(collection(db, 'songs'), orderBy('date', 'desc'))
+    onSnapshot(q, (querySnapshot) => {
+      setSongs(querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        data: doc.data()
+      })))
+    })
+  },[])
+
+  console.log(songs)
 
   const dispatch = useDispatch()
   let navigate = useNavigate();
@@ -65,6 +80,7 @@ export const AddSongForm = () => {
           <Link to="/WriteSongTest">
           Test
           </Link>
+          <div>Songs List</div>
       </Form>
     </Wrapper>
   )

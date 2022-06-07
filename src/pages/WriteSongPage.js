@@ -1,16 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { AddSongForm } from '../components/AddSongForm'
+import { AddSongFormTest } from '../components/AddSongFormTest'
 import styled from 'styled-components/macro'
 
 
-const CreateSongPage = () => (
+const WriteSongPage = () => (
   <Wrapper>
-    <AddSongForm />
+    <AddSongFormTest />
   </Wrapper>
 )
 
-export default CreateSongPage
+export default WriteSongPage
 
 const Wrapper = styled.section`
   padding: 4em;

@@ -10,8 +10,6 @@ export const LyricsSearchForm = ({ showLyricsDisplay }) => {
 
     const [artist, setArtist] = useState('');
     const [songList, setSongList] = useState([]);
-    const [selectedArtist, setSelectedArtist] = useState('');
-    const [selectedSongLyric, setSelectedSongLyrics] = useState('')
     const [skipSongSearch, setSkipSongSearch ] = useState(true)
     const [skipLyricSearch, setSkipLyricSearch ] = useState(true)
 
@@ -29,11 +27,6 @@ export const LyricsSearchForm = ({ showLyricsDisplay }) => {
         setSongList(data.data)
     }
 
-
-    const { data: lyricsData, error: lyricsError, isLoading: lyricsisLoading } = useGetLyricsByArtistQuery({artist: selectedArtist , songTitle: selectedSongLyric }, { skip: skipLyricSearch })
-
-    console.log('this is the lyrics data' + lyricsData);
-
     const handleSubmit = () => {
 
         setSkipSongSearch(!skipSongSearch)
@@ -41,7 +34,7 @@ export const LyricsSearchForm = ({ showLyricsDisplay }) => {
         if(myRef.current.value !== '') {
             setArtist(myRef.current.value)
         } else {
-            alert("please input the search field");
+            alert("Please input the search field");
         }
 
         console.log(artist)
@@ -51,8 +44,6 @@ export const LyricsSearchForm = ({ showLyricsDisplay }) => {
 
     const getSongLyrics = (artist, song) => {
         setSkipLyricSearch(!skipLyricSearch)
-        setSelectedArtist(artist)
-        setSelectedSongLyrics(song)
         dispatch(songAdded(artist, song ))
     }
 
@@ -80,9 +71,10 @@ export const LyricsSearchForm = ({ showLyricsDisplay }) => {
             </TableContent>
             {songList.length !==0 && songList.map(song => (
                 <TableContent onClick={() => getSongLyrics(song.artist.name, song.title_short)}>
-                    <td key={song.id}>{song.artist.name}</td> 
-                    <td onClick={() => showLyricsDisplay(true)}
-                    >{song.title_short}</td> 
+                    <TableEntry key={song.id}>{song.artist.name}</TableEntry> 
+                    <TableEntrySong onClick={() => showLyricsDisplay(true)}
+                    >{song.title_short}
+                    </TableEntrySong> 
                 </TableContent>
             ))}
           </Table>
@@ -114,6 +106,8 @@ const Wrapper = styled.section`
 `;
 
 const Input = styled.input`
+  width: 50%;
+  text-align: center;
   padding: 10px;
   margin: 10px 0;
   border:0; 
@@ -160,6 +154,17 @@ const TableHeading = styled.th`
 
 const TableContent = styled.tr`
     color: salmon
+`
+
+const TableEntry = styled.td`
+cursor: pointer;
+`
+
+const TableEntrySong = styled.td`
+cursor: pointer;
+&:hover {
+  color: palevioletred;
+}
 `
 
   

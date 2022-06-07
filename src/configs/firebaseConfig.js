@@ -6,6 +6,32 @@ import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+import { 
+    getFirestore,
+    query,
+    orderBy,
+    onSnapshot,
+    collection,
+    getDoc, 
+    getDocs, 
+    addDoc,
+    updateDoc,
+    doc, 
+    serverTimestamp,    
+    arrayUnion,
+    deleteDoc
+} from "firebase/firestore";
+
+import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    updateProfile, 
+    onAuthStateChanged, 
+    signInWithEmailAndPassword, 
+    signOut 
+    } from 'firebase/auth';
+
 export const firebaseConfig = {
   apiKey: "AIzaSyBSjfCRBi1pMDKFYWR5bbF9QEjZmW3QUQg",
   authDomain: "songify-72495.firebaseapp.com",
@@ -19,3 +45,64 @@ export const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+export const db = getFirestore(app);
+
+const auth = getAuth();
+
+const songsColRef = collection(db, 'songs')
+
+export {
+    auth,
+    createUserWithEmailAndPassword,
+    updateProfile,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut
+    }
+
+export const createSong = (user, title, lyric) => {
+    return addDoc(songsColRef, {
+            created: serverTimestamp(),
+            createdBy: user,
+            title,
+            lyric
+        });
+};
+
+export const getSongs = () => {  
+
+    const q = query(collection(db, 'songs'), orderBy('created', 'desc'))
+    
+    onSnapshot(q, (querySnapshot) => {
+        let data = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                data: doc.data()
+        }))
+
+    console.log(data);
+
+    })
+}
+
+export const handleDelete = async (id) => {
+
+    const taskDocRef = doc(songsColRef, id)
+    try {
+        await deleteDoc(taskDocRef)
+    } catch (err) {
+        alert(err)
+    }
+}
+
+export const onSaveSongClicked = async (user, title, lyric) => {
+    try {
+        await addDoc(songsColRef, {
+        date: serverTimestamp(),
+        createdBy: user,
+        title: title,
+        lyric: lyric
+        })
+    } catch(err) {
+        alert(err)
+    }
+}

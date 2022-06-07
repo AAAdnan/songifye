@@ -16,10 +16,8 @@ const LyricsSearchFormPage = () => {
 
   return (
   <Wrapper>
-    <div>
       { !lyricsDisplay  && <LyricsSearchForm showLyricsDisplay={showLyricsDisplay} /> }
       { lyricsDisplay && <LyricsDisplay showLyricsDisplay={showLyricsDisplay }/> }
-    </div>
   </Wrapper>
   )
   }
@@ -29,5 +27,5 @@ export default LyricsSearchFormPage
 const Wrapper = styled.section`
   padding: 4em;
   background: papayawhip;
-  height: 100vh;
+  min-height: 100vh;
 `;

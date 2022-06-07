@@ -1,28 +1,48 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
-import { songAdded} from '../features/songs/songsSlice'
-import { selectUser } from '../features/users/usersSlice'
-import {db, getSongs, handleDelete} from '../configs/firebaseConfig'
+import { songAdded } from '../features/songs/songsSlice'
+import { Redirect, Route, useNavigate } from "react-router-dom";
+import {db, getSongs, handleDelete, onSaveSongClicked} from '../configs/firebaseConfig'
 import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc} from 'firebase/firestore'
-import { Redirect, Route, useNavigate, Link } from "react-router-dom";
+import { selectUser } from '../features/users/usersSlice'
+import { identifier } from '@babel/types';
+import * as FirestoreService from '../configs/firebaseConfig'
 
-export const AddSongForm = () => {
+
+export const AddSongFormTest = () => {
   const [title, setTitle] = useState('')
   const [lyric, setLyric] = useState('')
+  const [songs, setSongs] = useState('')
+  const [error, setError] = useState();
+  const [firebaseSongs, setFirebaseSongs] = useState([])
 
   const dispatch = useDispatch()
   let navigate = useNavigate();
 
   const user = useSelector(selectUser)
 
+  console.log('this is the user' + (user.displayName))
+
+  console.log(songs)
+
+  useEffect(() => {
+    const q = query(collection(db, 'songs'), orderBy('date', 'desc'))
+    onSnapshot(q, (querySnapshot) => {
+      setSongs(querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        data: doc.data()
+      })))
+    })
+  },[])
+
   const onTitleChanged = e => setTitle(e.target.value)
   const onLyricChanged = e => setLyric(e.target.value)
 
   const onSaveReduxSongClicked = () => {
     if (title && lyric && user) {
-      dispatch(songAdded(title, lyric, user))
-      navigate('/songs')
+      dispatch(songAdded(title, lyric, user.displayName))
+      onSaveSongClicked(user.displayName, title, lyric)
       setTitle('')
       setLyric('')
     }
@@ -34,6 +54,7 @@ export const AddSongForm = () => {
 
   const canSave = Boolean(title) && Boolean(lyric) && Boolean(user)
 
+  
   return (
     <Wrapper>
       <Title>Add a New Song</Title>
@@ -50,7 +71,7 @@ export const AddSongForm = () => {
             </SongTitleDiv>
             <AuthorDiv>
                 <Label htmlFor="songAuthor">Author:</Label>
-                <Div>{user.displayName}</Div>
+                <div>{user != null && user.displayName}</div>
             </AuthorDiv>
             <LyricDiv>
                 <Label htmlFor="songContent">Lyrics:</Label>
@@ -61,17 +82,24 @@ export const AddSongForm = () => {
                     onChange={onLyricChanged}
                 />
             </LyricDiv>
-          <Button type="button" onClick={onSaveReduxSongClicked} disabled={!canSave}>
+          <Button type="button" onClick={onSaveReduxSongClicked}  disabled={!canSave} >
             Save Song
           </Button>
-          <Link to="/WriteSongTest">
-          Test
-          </Link>
-          <div>Songs List</div>
       </Form>
+      <div>Songs List</div>
+      {songs && songs.map((song) =>(
+          <div key={song.id}>
+            <h2 >{song.data.title}</h2>
+            <div>{song.data.lyric}</div>
+            <div>Edit</div>
+            <div onClick={() => handleDelete(song.id)}>Delete</div>
+          </div>
+      ))}
     </Wrapper>
   )
 }
+
+
 
 const theme = {
     blue: {
@@ -112,15 +140,9 @@ const Form = styled.div`
     border-color: #F8B88B;
 `
 
-const Div = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-`
-
 const SongTitleDiv = styled.div`
     display: flex;
-    margin: 20px 10px 20px 10px;
+    margin-top: 20px;
 `
 
 const Label = styled.label`
@@ -133,20 +155,16 @@ const Input = styled.input`
 
 const TextArea = styled.textarea`
     width: 75%;
-    text: arial;
     min-height: 1000px;
 `
 
 const AuthorDiv = styled.div`
     display: flex;
     margin: 20px 10px 20px 10px;
-    align-content: baseline;
 `
 
 const LyricDiv = styled.div`
-    display: flex;
-    margin: 20px 10px 20px 10px;
-
+    display: flex
 `
 
 const Button = styled.button`

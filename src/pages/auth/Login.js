@@ -1,28 +1,57 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Redirect, Route, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import Modal from "../../components/Modal/modal"
 import styled from 'styled-components/macro'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { saveUserDetails } from "../../features/users/usersSlice";
+import { login } from '../../features/users/usersSlice'
 
 
 const Login = () => {
+    
+let navigate = useNavigate();
+  
+     
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("")
+
+  const [active, setActive] = useState(false);
 
   const auth = getAuth();
+
+  const dispatch = useDispatch();
+
 
 
  const signIn = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("Singed in user: ", user);
+      .then((userAuth) => {
+        dispatch(
+          login({
+            email: userAuth.user.email,
+            uid: userAuth.user.uid,
+            displayName: userAuth.user.displayName,
+            photoUrl: userAuth.user.photoURL,
+          })
+        );
+        navigate("/");
+    
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
+        setErrorMessage(error.message)
         console.log("An error occured: ", errorCode, errorMessage);
+        setActive(true);
+
       });
   };
+
+  const canSave = Boolean(email) && Boolean(password)
+
 
   return (
     <Wrapper>
@@ -44,8 +73,16 @@ const Login = () => {
       />
       <br />
       <div>
-        <Button theme="pink" onClick={signIn}>Log In</Button>
+        <Button theme="pink" onClick={signIn} disabled={!canSave}>Log In</Button>
       </div>
+      <Modal
+        active={active}
+        hideModal={() => setActive(false)}
+        icon="fa-solid fa-exclamation"
+        >
+        {errorMessage}
+      </Modal>
+      <FontAwesomeIcon icon={faCoffee} />
     </Wrapper>
   );
 };

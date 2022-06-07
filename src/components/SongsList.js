@@ -17,12 +17,11 @@ export const SongsList = () => {
     .sort((a, b) => b.date.localeCompare(a.date))
 
 
-
   const renderedSongs = orderedSongs.map(song => (
     <Article key={song.id}>
       <h3>{song.title}</h3>
       <div>
-        <SongAuthor userId={song.user} />
+        <SongAuthor userId={song.createdBy} />
         <TimeAgo timestamp={song.date} />
       </div>
       <p>{song.lyric.substring(0, 100)}</p>
@@ -32,7 +31,7 @@ export const SongsList = () => {
          View Song
         </Button>
       </Link>
-        <Button onClick={() => onSaveSongClicked(song.user , song.title, song.lyric)} >
+        <Button onClick={() => onSaveSongClicked(song.createdBy , song.title, song.lyric)} >
         Save Song
         </Button>
     </Div>

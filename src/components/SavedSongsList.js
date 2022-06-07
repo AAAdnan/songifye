@@ -36,8 +36,7 @@ export const SavedSongsList = () => {
         <div key={song.id}>
           <h3>{song.data.title}</h3>
           <p className="post-content">{song.data.lyric.substring(0, 100)}</p>
-          <div>{song.data.lyric}</div>
-          <SongAuthor userId={song.data.user} />
+          <SongAuthor userId={song.data.createdBy} />
           <div className="button muted-button">Edit</div>
           <div className="button muted-button" onClick={() => handleDelete(song.id)}>Delete</div>
           <Link to={`/songs/${song.id}`} className="button muted-button">

@@ -64,10 +64,6 @@ export const AddSongForm = () => {
           <Button type="button" onClick={onSaveReduxSongClicked} disabled={!canSave}>
             Save Song
           </Button>
-          <Link to="/WriteSongTest">
-          Test
-          </Link>
-          <div>Songs List</div>
       </Form>
     </Wrapper>
   )

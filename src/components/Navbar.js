@@ -34,11 +34,11 @@ export const Navbar = () => {
         Write Songs
         </Link>}
         {user && <Link to="/songs">
-        Songs
+        Current Songs
         </Link>}
-        {user && <Link to="/secret">
-            Protected page
-            </Link>}
+        {user && <Link to="/SavedSongs">
+        Saved Songs
+        </Link>}
         {user && <Link
             to="#"
             onClick={() => {

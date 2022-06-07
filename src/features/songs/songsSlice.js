@@ -22,22 +22,6 @@ const FirebaseState = () => {
 }
 
 const initialState = [
-    {
-      id: '1',
-      title: 'First Post!',
-      lyric: 'Hello!',
-      user: '0',
-      date: sub(new Date(), { minutes: 10 }).toISOString(),
-     
-    },
-    {
-      id: '2',
-      title: 'Second Post',
-      lyric: 'More text',
-      user: '2',
-      date: sub(new Date(), { minutes: 5 }).toISOString(),
-     
-    },
   ]
 
   const songsSlice = createSlice({

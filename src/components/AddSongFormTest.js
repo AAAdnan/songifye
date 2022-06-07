@@ -41,17 +41,17 @@ export const AddSongFormTest = () => {
   const onTitleChanged = e => setTitle(e.target.value)
   const onLyricChanged = e => setLyric(e.target.value)
 
-
   const onSaveReduxSongClicked = () => {
     if (title && lyric && user) {
       dispatch(songAdded(title, lyric, user))
+      onSaveSongClicked(user, title, lyric)
       setTitle('')
       setLyric('')
-      navigate("/songs");
     }
     else {
       console.log('error')
     }
+    
   }
 
   const canSave = Boolean(title) && Boolean(lyric) && Boolean(user)
@@ -84,7 +84,7 @@ export const AddSongFormTest = () => {
                     onChange={onLyricChanged}
                 />
             </LyricDiv>
-          <Button type="button" onClick={() => onSaveSongClicked(user, title, lyric)}  disabled={!canSave} >
+          <Button type="button" onClick={onSaveReduxSongClicked}  disabled={!canSave} >
             Save Song
           </Button>
       </Form>

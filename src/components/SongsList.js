@@ -5,28 +5,10 @@ import { TimeAgo } from '../features/songs/TimeAgo'
 import { SongAuthor } from '../features/songs/SongAuthor'
 import styled from 'styled-components/macro'
 import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc} from 'firebase/firestore'
-import {db, handleDelete} from '../configs/firebaseConfig'
+import {db, handleDelete, onSaveSongClicked} from '../configs/firebaseConfig'
 
 export const SongsList = () => {
 
-  const [firebaseSongs, setFirebaseSongs] = useState('')
-
-  useEffect(() => {
-    const q = query(collection(db, 'songs'), orderBy('date', 'desc'))
-
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      setFirebaseSongs(querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        data: doc.data()
-      })))
-    })
-
-    return unsubscribe;
-    
-  }, [])
-
-
-  console.log(firebaseSongs)
 
   const songs = useSelector(state => state.songs)
 
@@ -34,20 +16,25 @@ export const SongsList = () => {
     .slice()
     .sort((a, b) => b.date.localeCompare(a.date))
 
-    console.log(firebaseSongs)
-
   const renderedSongs = orderedSongs.map(song => (
-    <article className="post-excerpt" key={song.id}>
+    <Article key={song.id}>
       <h3>{song.title}</h3>
       <div>
         <SongAuthor userId={song.user} />
         <TimeAgo timestamp={song.date} />
       </div>
-      <p className="post-content">{song.lyric.substring(0, 100)}</p>
-      <Link to={`/songs/${song.id}`} className="button muted-button">
-        View Song
+      <p>{song.lyric.substring(0, 100)}</p>
+      <Div>
+      <Link to={`/songs/${song.id}`}>
+        <Button>
+         View Song
+        </Button>
       </Link>
-    </article>
+        <Button onClick={() => onSaveSongClicked(song.user, song.title, song.lyric)} >
+        Save Song
+        </Button>
+    </Div>
+    </Article>
   ))
    
 
@@ -55,19 +42,6 @@ export const SongsList = () => {
     <Wrapper className="posts-list">
       <Title>Songs</Title>
       {renderedSongs}
-      {firebaseSongs && firebaseSongs.map((song) =>(
-        <div key={song.id}>
-          <h3>{song.data.title}</h3>
-          <p className="post-content">{song.data.lyric.substring(0, 100)}</p>
-          <div>{song.data.lyric}</div>
-          <SongAuthor userId={song.data.createdBy} />
-          <div className="button muted-button">Edit</div>
-          <div className="button muted-button" onClick={() => handleDelete(song.id)}>Delete</div>
-          <Link to={`/songs/${song.id}`} className="button muted-button">
-            View Song
-          </Link>
-        </div>
-    ))}
     </Wrapper>
   )
 }
@@ -78,6 +52,30 @@ const Title = styled.h2`
     text-align: center;
     color: #F8B88B
 `;
+
+const Div = styled.div`
+  padding: 10px;
+`
+
+const Article = styled.article`
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #eee;
+`
+
+const Button = styled.button`
+  display: inline-block;
+  cursor: pointer;
+  background: #ea3546;
+  color: white;
+  border-radius: 4px;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  margin-bottom: 5px;
+  &:hover {
+    background: salmon;
+    color:white;
+  }
+`
 
 const Wrapper = styled.section`
     background: papayawhip;

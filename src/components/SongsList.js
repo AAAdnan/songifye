@@ -9,12 +9,14 @@ import {db, handleDelete, onSaveSongClicked} from '../configs/firebaseConfig'
 
 export const SongsList = () => {
 
-
   const songs = useSelector(state => state.songs)
+
 
   const orderedSongs = songs
     .slice()
     .sort((a, b) => b.date.localeCompare(a.date))
+
+
 
   const renderedSongs = orderedSongs.map(song => (
     <Article key={song.id}>
@@ -30,12 +32,15 @@ export const SongsList = () => {
          View Song
         </Button>
       </Link>
-        <Button onClick={() => onSaveSongClicked(song.user, song.title, song.lyric)} >
+        <Button onClick={() => onSaveSongClicked(song.user , song.title, song.lyric)} >
         Save Song
         </Button>
     </Div>
     </Article>
   ))
+
+  console.log('these are the redux songs + ' + renderedSongs)
+
    
 
   return (

@@ -22,9 +22,7 @@ export const AddSongFormTest = () => {
 
   const user = useSelector(selectUser)
 
-
-
-  console.log(user)
+  console.log('this is the user' + (user.displayName))
 
   console.log(songs)
 
@@ -43,8 +41,8 @@ export const AddSongFormTest = () => {
 
   const onSaveReduxSongClicked = () => {
     if (title && lyric && user) {
-      dispatch(songAdded(title, lyric, user))
-      onSaveSongClicked(user, title, lyric)
+      dispatch(songAdded(title, lyric, user.displayName))
+      onSaveSongClicked(user.displayName, title, lyric)
       setTitle('')
       setLyric('')
     }

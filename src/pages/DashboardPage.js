@@ -15,28 +15,28 @@ const DashboardPage = () => {
     let newArray = lyrics.filter((el) => {
         return el.artist.length > 0 
     })
-
-    console.log(newArray)
     
     return (
         <Wrapper>
             <Title>Profile</Title>
             <Paragraph>Welcome {user && user.displayName}</Paragraph>
             <SubHeader>Search History</SubHeader>
-            <Table>
-            <TableContent>
-                <TableHeading>Artist</TableHeading>
-                <TableHeading>Song Title</TableHeading>
-            </TableContent>
-            {newArray.length !==0 && newArray.map(song => (
-                <TableContent >
-                    <TableEntry key={song.id}>{song.artist}</TableEntry> 
-                    <TableEntrySong>
-                    {song.song}
-                    </TableEntrySong> 
+            { newArray.length > 0 &&
+                <Table>
+                <TableContent>
+                    <TableHeading>Artist</TableHeading>
+                    <TableHeading>Song Title</TableHeading>
                 </TableContent>
-            ))}
-          </Table>
+                {newArray.length !==0 && newArray.map(song => (
+                    <TableContent >
+                        <TableEntry key={song.id}>{song.artist}</TableEntry> 
+                        <TableEntrySong>
+                        {song.song}
+                        </TableEntrySong> 
+                    </TableContent>
+                ))}
+                </Table>
+            }
             <Div>
                 <Button>
                     <Link to="/songs">

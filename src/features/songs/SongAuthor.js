@@ -8,5 +8,5 @@ export const SongAuthor = ({ userId }) => {
 
   console.log(author)
 
-  return <span>by {author ? author.user : 'Unknown author'}</span>
+  return <span>by {author ? author.createdBy : 'Unknown author'}</span>
 }

@@ -39,7 +39,7 @@ const initialState = [
                   date: new Date().toISOString(),
                   title,
                   lyric,
-                  createdBy: user
+                  createdBy: user.displayName
                 }
               }
             }

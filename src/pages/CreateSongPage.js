@@ -1,16 +1,18 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { AddSongForm } from '../components/AddSongForm'
-import styled from 'styled-components/macro'
+/* eslint-disable react/jsx-filename-extension */
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components/macro';
+import { AddSongForm } from '../components/AddSongForm';
 
+function CreateSongPage() {
+  return (
+    <Wrapper>
+      <AddSongForm />
+    </Wrapper>
+  );
+}
 
-const CreateSongPage = () => (
-  <Wrapper>
-    <AddSongForm />
-  </Wrapper>
-)
-
-export default CreateSongPage
+export default CreateSongPage;
 
 const Wrapper = styled.section`
   padding: 4em;

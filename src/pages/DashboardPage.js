@@ -1,58 +1,58 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components/macro'
-import { selectUser } from '../features/users/usersSlice'
-import { selectSongLyric } from '../features/lyrics/lyricsSlice'
+/* eslint-disable react/jsx-filename-extension */
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components/macro';
+import { selectUser } from '../features/users/usersSlice';
+import { selectSongLyric } from '../features/lyrics/lyricsSlice';
 
+function DashboardPage() {
+  const user = useSelector(selectUser);
 
-const DashboardPage = () => {
+  const lyrics = useSelector(selectSongLyric);
 
-    const user = useSelector(selectUser)
+  const newArray = lyrics.filter((el) => el.artist.length > 0);
 
-    const lyrics = useSelector(selectSongLyric)
-
-    let newArray = lyrics.filter((el) => {
-        return el.artist.length > 0 
-    })
-    
-    return (
-        <Wrapper>
-            <Title>Profile</Title>
-            <Paragraph>Welcome {user && user.displayName}</Paragraph>
-            <SubHeader>Search History</SubHeader>
-            { newArray.length > 0 &&
+  return (
+    <Wrapper>
+      <Title>Profile</Title>
+      <Paragraph>
+        Welcome
+        {user && user.displayName}
+      </Paragraph>
+      <SubHeader>Search History</SubHeader>
+      { newArray.length > 0
+                && (
                 <Table>
-                <TableContent>
+                  <TableContent>
                     <TableHeading>Artist</TableHeading>
                     <TableHeading>Song Title</TableHeading>
-                </TableContent>
-                {newArray.length !==0 && newArray.map(song => (
-                    <TableContent >
-                        <TableEntry key={song.id}>{song.artist}</TableEntry> 
-                        <TableEntrySong>
+                  </TableContent>
+                  {newArray.length !== 0 && newArray.map((song) => (
+                    <TableContent>
+                      <TableEntry key={song.id}>{song.artist}</TableEntry>
+                      <TableEntrySong>
                         {song.song}
-                        </TableEntrySong> 
+                      </TableEntrySong>
                     </TableContent>
-                ))}
+                  ))}
                 </Table>
-            }
-            <Div>
-                <Button>
-                    <Link to="/songs">
-                        View Songs
-                    </Link>
-                </Button>
-                <Button>
-                    <Link to="/WriteSong">
-                        Write Song
-                    </Link>
-                </Button>
-            </Div>
-        </Wrapper>
-    )
- 
- }
+                )}
+      <Div>
+        <Button>
+          <Link to="/songs">
+            View Songs
+          </Link>
+        </Button>
+        <Button>
+          <Link to="/WriteSong">
+            Write Song
+          </Link>
+        </Button>
+      </Div>
+    </Wrapper>
+  );
+}
 
 export default DashboardPage;
 
@@ -66,8 +66,8 @@ const Wrapper = styled.section`
 `;
 
 const Paragraph = styled.p`
- color: palevioletred;
-`
+  color: palevioletred;
+`;
 
 const Title = styled.h2`
     font-size: 3.5em;
@@ -88,8 +88,7 @@ const Div = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 10px;
-`
-
+`;
 
 const Button = styled.button`
   background: #F8B88B;
@@ -114,27 +113,26 @@ const Button = styled.button`
 
 const Table = styled.table`
     margin-top: 10px;
-    margin-left:auto; 
+    margin-left:auto;
     margin-right:auto;
     width: 100%;
-`
+`;
 
 const TableHeading = styled.th`
     color: palevioletred
-`
+`;
 
 const TableContent = styled.tr`
     color: salmon
-`
+`;
 
 const TableEntry = styled.td`
 cursor: pointer;
-`
+`;
 
 const TableEntrySong = styled.td`
 cursor: pointer;
 &:hover {
   color: palevioletred;
 }
-`
-
+`;

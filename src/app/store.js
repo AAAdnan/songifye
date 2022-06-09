@@ -1,13 +1,12 @@
+/* eslint-disable import/prefer-default-export */
 import { configureStore } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query'
-import songsReducer from '../features/songs/songsSlice'
-import lyricsReducer from '../features/lyrics/lyricsSlice'
-import usersReducer from '../features/users/usersSlice'
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { firebaseReducer } from 'react-redux-firebase';
+import songsReducer from '../features/songs/songsSlice';
+import lyricsReducer from '../features/lyrics/lyricsSlice';
+import usersReducer from '../features/users/usersSlice';
 import { pokemonApi } from '../services/pokemon';
 import { lyricsApi } from '../services/lyrics';
-import { firebaseReducer } from 'react-redux-firebase'
-
-
 
 export const store = configureStore({
   reducer: {
@@ -16,10 +15,9 @@ export const store = configureStore({
     lyrics: lyricsReducer,
     firebase: firebaseReducer,
     [pokemonApi.reducerPath]: pokemonApi.reducer,
-    [lyricsApi.reducerPath]: lyricsApi.reducer
+    [lyricsApi.reducerPath]: lyricsApi.reducer,
   },
-    middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(lyricsApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(lyricsApi.middleware),
 });
 
-setupListeners(store.dispatch)
+setupListeners(store.dispatch);

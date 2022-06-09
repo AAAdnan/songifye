@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { TimeAgo } from '../features/songs/TimeAgo'
-import { SongAuthor } from '../features/songs/SongAuthor'
-import styled from 'styled-components/macro'
-import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc} from 'firebase/firestore'
-import {db, handleDelete, onSaveSongClicked} from '../configs/firebaseConfig'
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable react/jsx-filename-extension */
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components/macro';
+import {
+  collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc,
+} from 'firebase/firestore';
+import { TimeAgo } from '../features/songs/TimeAgo';
+import { SongAuthor } from '../features/songs/SongAuthor';
+import { db, handleDelete, onSaveSongClicked } from '../configs/firebaseConfig';
 
-export const SongsList = () => {
-
-  const songs = useSelector(state => state.songs)
-
+export function SongsList() {
+  const songs = useSelector((state) => state.songs);
 
   const orderedSongs = songs
     .slice()
-    .sort((a, b) => b.date.localeCompare(a.date))
+    .sort((a, b) => b.date.localeCompare(a.date));
 
-
-
-  const renderedSongs = orderedSongs.map(song => (
+  const renderedSongs = orderedSongs.map((song) => (
     <Article key={song.id}>
       <h3>{song.title}</h3>
       <div>
@@ -27,28 +27,26 @@ export const SongsList = () => {
       </div>
       <p>{song.lyric.substring(0, 100)}</p>
       <Div>
-      <Link to={`/songs/${song.id}`}>
-        <Button>
-         View Song
+        <Link to={`/songs/${song.id}`}>
+          <Button>
+            View Song
+          </Button>
+        </Link>
+        <Button onClick={() => onSaveSongClicked(song.user, song.title, song.lyric)}>
+          Save Song
         </Button>
-      </Link>
-        <Button onClick={() => onSaveSongClicked(song.user , song.title, song.lyric)} >
-        Save Song
-        </Button>
-    </Div>
+      </Div>
     </Article>
-  ))
+  ));
 
-  console.log('these are the redux songs + ' + renderedSongs)
-
-   
+  console.log(`these are the redux songs + ${renderedSongs}`);
 
   return (
     <Wrapper className="posts-list">
       <Title>Songs</Title>
       {renderedSongs}
     </Wrapper>
-  )
+  );
 }
 
 const Title = styled.h2`
@@ -60,12 +58,12 @@ const Title = styled.h2`
 
 const Div = styled.div`
   padding: 10px;
-`
+`;
 
 const Article = styled.article`
   padding: 1.5rem 0;
   border-bottom: 1px solid #eee;
-`
+`;
 
 const Button = styled.button`
   display: inline-block;
@@ -80,7 +78,7 @@ const Button = styled.button`
     background: salmon;
     color:white;
   }
-`
+`;
 
 const Wrapper = styled.section`
     background: papayawhip;
@@ -90,4 +88,3 @@ const Wrapper = styled.section`
     align-items: center;
     min-height: 100vh;
 `;
-

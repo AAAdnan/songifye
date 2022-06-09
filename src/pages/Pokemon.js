@@ -1,9 +1,11 @@
-import * as React from 'react'
-import { useGetPokemonByNameQuery } from '../services/pokemon'
+/* eslint-disable no-nested-ternary */
+/* eslint-disable react/jsx-filename-extension */
+import * as React from 'react';
+import { useGetPokemonByNameQuery } from '../services/pokemon';
 
-const Pokemon = () => {
+function Pokemon() {
   // Using a query hook automatically fetches data and returns query values
-  const { data, error, isLoading } = useGetPokemonByNameQuery('mew')
+  const { data, error, isLoading } = useGetPokemonByNameQuery('mew');
   // Individual hooks are also accessible under the generated endpoints:
   // const { data, error, isLoading } = pokemonApi.endpoints.getPokemonByName.useQuery('bulbasaur')
 
@@ -20,7 +22,7 @@ const Pokemon = () => {
         </>
       ) : null}
     </div>
-  )
+  );
 }
 
 export default Pokemon;

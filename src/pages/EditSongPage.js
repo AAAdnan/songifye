@@ -1,11 +1,14 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { EditSongForm } from '../components/EditSongForm'
+/* eslint-disable react/jsx-filename-extension */
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { EditSongForm } from '../components/EditSongForm';
 
-const EditSongPage = () => (
-  <section>
-    <EditSongForm />
-  </section>
-)
+function EditSongPage() {
+  return (
+    <section>
+      <EditSongForm />
+    </section>
+  );
+}
 
-export default EditSongPage
+export default EditSongPage;

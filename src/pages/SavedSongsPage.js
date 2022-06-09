@@ -1,11 +1,14 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { SavedSongsList } from '../components/SavedSongsList'
+/* eslint-disable react/jsx-filename-extension */
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { SavedSongsList } from '../components/SavedSongsList';
 
-const SavedSongsPage = () => (
-  <section>
-    <SavedSongsList />
-  </section>
-)
+function SavedSongsPage() {
+  return (
+    <section>
+      <SavedSongsList />
+    </section>
+  );
+}
 
-export default SavedSongsPage
+export default SavedSongsPage;

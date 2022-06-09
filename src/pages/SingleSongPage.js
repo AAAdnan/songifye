@@ -1,25 +1,22 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom'
-import { SongAuthor } from '../features/songs/SongAuthor'
-import { TimeAgo } from '../features/songs/TimeAgo'
-import styled from 'styled-components/macro'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useParams, Link } from 'react-router-dom';
+import styled from 'styled-components/macro';
+import { SongAuthor } from '../features/songs/SongAuthor';
+import { TimeAgo } from '../features/songs/TimeAgo';
 
-
-const SingleSongPage = () => {
+function SingleSongPage() {
   const { id } = useParams();
 
-  const song = useSelector(state =>
-    state.songs.find(song => song.id === id)
-  )
+  const song = useSelector((state) => state.songs.find((song) => song.id === id));
 
   if (!song) {
     return (
+      // eslint-disable-next-line react/jsx-filename-extension
       <section>
         <h2>Song not found!</h2>
       </section>
-    )
+    );
   }
 
   return (
@@ -32,23 +29,23 @@ const SingleSongPage = () => {
         </div>
         <p className="song-content">{song.lyric}</p>
         <Div>
-          <Link to={`/editSong/${song.id}`} >
-          <Button>
-              Edit Song
-          </Button>
-          </Link>
-          <Link to={`/songs`}>
+          <Link to={`/editSong/${song.id}`}>
             <Button>
-                Back
+              Edit Song
+            </Button>
+          </Link>
+          <Link to="/songs">
+            <Button>
+              Back
             </Button>
           </Link>
         </Div>
       </article>
     </Wrapper>
-  )
+  );
 }
 
-export default SingleSongPage
+export default SingleSongPage;
 
 const Wrapper = styled.section`
     background: papayawhip;
@@ -67,11 +64,11 @@ const Title = styled.h2`
 `;
 
 const Div = styled.div`
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     padding: 20px 20px;
-`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px;
+`;
 
 const Button = styled.button`
   background: #ea3546;
@@ -86,4 +83,4 @@ const Button = styled.button`
     background: salmon;
     color:white;
   }
-`
+`;

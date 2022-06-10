@@ -33,8 +33,7 @@ export function SavedSongsList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const openSongClicked = (id) => {
-    console.log(id);
-    // dispatch(songPicked());
+    dispatch(songPicked());
     navigate(`/songs/${id}`);
   };
 

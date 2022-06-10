@@ -54,9 +54,11 @@ const songsSlice = createSlice({
       }
     },
     songPicked(state, action) {
-      const { id } = action.payload;
+      const id = action.payload;
       const existingSong = state.find((song) => song.id === id);
-      return existingSong;
+      return {
+        singleSong: existingSong,
+      };
     },
   },
 });

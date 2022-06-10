@@ -57,7 +57,7 @@ function SavedSingleSongPage() {
       <article className="song">
         <Title>{currentSong.data.title}</Title>
         <div>
-          <SongAuthor userId={currentSong.data.createdBy} />
+          {/* <SongAuthor userId={currentSong.data.createdBy} /> */}
           <TimeAgo timestamp={currentSong.date} />
         </div>
         <p className="song-content">{currentSong.data.lyric}</p>

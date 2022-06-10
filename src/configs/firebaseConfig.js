@@ -94,7 +94,7 @@ export const onSaveSongClicked = async (user, title, lyric) => {
   try {
     await addDoc(songsColRef, {
       date: serverTimestamp(),
-      createdBy: user,
+      createdBy: user || null,
       title,
       lyric,
     });

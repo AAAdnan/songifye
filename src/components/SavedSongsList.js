@@ -45,7 +45,9 @@ export function SavedSongsList() {
           <h3>{song.data.title}</h3>
           <p className="post-content">{song.data.lyric.substring(0, 100)}</p>
           <div>{song.data.lyric}</div>
-          <SongAuthor userId={song.data.user} />
+          {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
+          <p>Saved by {song.data.createdBy}</p>
+          {/* <SongAuthor userId={song.data.user} /> */}
           <div className="button muted-button">Edit</div>
           <div className="button muted-button" onClick={() => handleDelete(song.id)}>Delete</div>
           <Button type="button" onClick={() => openSongClicked(song.id)} className="button muted-button">

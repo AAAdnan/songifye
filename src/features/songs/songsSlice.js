@@ -53,9 +53,16 @@ const songsSlice = createSlice({
         existingSong.lyric = lyric;
       }
     },
+    songPicked(state, action) {
+      const { id } = action.payload;
+      const existingSong = state.find((song) => song.id === id);
+      return existingSong;
+    },
   },
 });
 
-export const { songAdded, songUpdated, reactionAdded } = songsSlice.actions;
+export const {
+  songAdded, songPicked, songUpdated, reactionAdded,
+} = songsSlice.actions;
 
 export default songsSlice.reducer;

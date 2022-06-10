@@ -11,6 +11,7 @@ import { lyricsApi } from '../services/lyrics';
 export const store = configureStore({
   reducer: {
     songs: songsReducer,
+    singleSong: songsReducer,
     users: usersReducer,
     lyrics: lyricsReducer,
     firebase: firebaseReducer,

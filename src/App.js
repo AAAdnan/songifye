@@ -13,6 +13,7 @@ import ProtectedRoute from './services/ProtectedRoute';
 import DashboardPage from './pages/DashboardPage';
 import SongsPage from './pages/SongsPage';
 import SavedSongsPage from './pages/SavedSongsPage';
+import SingleSongPage from './pages/SingleSongPage';
 import SavedSingleSongPage from './pages/SavedSingleSongPage';
 import CreateSongPage from './pages/CreateSongPage';
 import WriteSongPage from './pages/WriteSongPage';
@@ -59,7 +60,8 @@ function App() {
         <Route exact path="Reset" element={<Reset />} />
         <Route exact path="Songs" element={<SongsPage />} />
         <Route exact path="SavedSongs" element={<SavedSongsPage />} />
-        <Route exact path="Songs/:id" element={<SavedSingleSongPage />} />
+        <Route exact path="Songs/:id" element={<SingleSongPage />} />
+        <Route exact path="SavedSongs/:id" element={<SavedSingleSongPage />} />
         <Route exact path="WriteSong" element={<CreateSongPage />} />
         <Route exact path="WriteSongTest" element={<WriteSongPage />} />
         <Route exact path="EditSongPageTest" element={<EditSongPageTest />} />

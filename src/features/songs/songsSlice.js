@@ -40,7 +40,7 @@ const songsSlice = createSlice({
             date: new Date().toISOString(),
             title,
             lyric,
-            // this line decides what goes into the createdBy prop:
+            // ***message*** this line decides what goes into the createdBy prop:
             createdBy: user.uid,
           },
         };
@@ -54,7 +54,8 @@ const songsSlice = createSlice({
         existingSong.lyric = lyric;
       }
     },
-    // this was an attempt, doesn't work for now:
+    // ***message*** this was an attempt, doesn't work for now,
+    // and i think it actually needs its own slice:
     songPicked(state, action) {
       const id = action.payload;
       const existingSong = state.find((song) => song.id === id);

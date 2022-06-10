@@ -34,7 +34,7 @@ export function SavedSongsList() {
   const navigate = useNavigate();
   const openSongClicked = (id) => {
     dispatch(songPicked());
-    navigate(`/songs/${id}`);
+    navigate(`/savedsongs/${id}`);
   };
 
   return (
@@ -50,7 +50,7 @@ export function SavedSongsList() {
           {/* <SongAuthor userId={song.data.user} /> */}
           <div className="button muted-button">Edit</div>
           <div className="button muted-button" onClick={() => handleDelete(song.id)}>Delete</div>
-          <Button type="button" onClick={() => openSongClicked(song.id)} className="button muted-button">
+          <Button type="button" onClick={() => openSongClicked(song.id)} className="">
             View Song
           </Button>
         </div>
@@ -76,6 +76,7 @@ const Wrapper = styled.section`
 `;
 
 const Button = styled.button`
+  background-color: #ea3546;
   cursor: pointer;
   width: 25%;
   color: white;
@@ -83,11 +84,9 @@ const Button = styled.button`
   border-radius: 5px;
   outline: 0;
   text-transform: uppercase;
-  margin: 5px 0px;
-  box-shadow: 0px 2px 2px lightgray;
   transition: ease background-color 250ms;
   &:hover {
-
+    background-color: #ad1457;
   }
   &:disabled {
     opacity: 0.7;

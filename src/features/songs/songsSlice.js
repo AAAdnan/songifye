@@ -55,7 +55,8 @@ const songsSlice = createSlice({
       }
     },
     // ***message*** this was an attempt, doesn't work for now,
-    // and i think it actually needs its own slice:
+    // ***message*** 2: it did actually load the song into the store
+    // but on redux songs list page, need to figure out how to use it
     songPicked(state, action) {
       const id = action.payload;
       const existingSong = state.find((song) => song.id === id);

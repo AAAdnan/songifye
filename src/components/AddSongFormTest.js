@@ -47,7 +47,7 @@ export function AddSongFormTest() {
 
   const onSaveReduxSongClicked = () => {
     if (title && lyric && user) {
-      dispatch(songAdded(title, lyric, user.displayName));
+      dispatch(songAdded(title, lyric, user));
       onSaveSongClicked(user.displayName, title, lyric);
       setTitle('');
       setLyric('');

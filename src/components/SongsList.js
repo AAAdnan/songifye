@@ -22,7 +22,7 @@ export function SongsList() {
     <Article key={song.id}>
       <h3>{song.title}</h3>
       <div>
-        <SongAuthor userId={song.createdBy} />
+        <SongAuthor userId={song.user} />
         <TimeAgo timestamp={song.date} />
       </div>
       <p>{song.lyric.substring(0, 100)}</p>
@@ -39,7 +39,7 @@ export function SongsList() {
     </Article>
   ));
 
-  console.log(`these are the redux songs + ${renderedSongs}`);
+  console.log('these are the redux songs: ', renderedSongs);
 
   return (
     <Wrapper className="posts-list">

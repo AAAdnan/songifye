@@ -40,7 +40,7 @@ const songsSlice = createSlice({
             date: new Date().toISOString(),
             title,
             lyric,
-            createdBy: user.displayName,
+            createdBy: user.uid,
           },
         };
       },

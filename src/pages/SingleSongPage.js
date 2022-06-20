@@ -27,7 +27,7 @@ const SingleSongPage = () => {
       <article className="song">
         <Title>{song.title}</Title>
         <div>
-          <SongAuthor userId={song.user} />
+          <SongAuthor userId={song.createdBy} />
           <TimeAgo timestamp={song.date} />
         </div>
         <p className="song-content">{song.lyric}</p>

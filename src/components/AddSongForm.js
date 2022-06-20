@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 import { songAdded} from '../features/songs/songsSlice'
 import { selectUser } from '../features/users/usersSlice'
-import {db, getSongs, handleDelete} from '../configs/firebaseConfig'
-import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc} from 'firebase/firestore'
-import { Redirect, Route, useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const AddSongForm = () => {
   const [title, setTitle] = useState('')

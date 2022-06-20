@@ -68,6 +68,7 @@ const Article = styled.article`
 
 const Button = styled.button`
   display: inline-block;
+  font-size: 1.1rem;
   cursor: pointer;
   background: #ea3546;
   color: white;

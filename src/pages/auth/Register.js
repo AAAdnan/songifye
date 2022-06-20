@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth, createUserWithEmailAndPassword,  updateProfile, signInWithEmailAndPassword,} from '../../configs/firebaseConfig';
+import { auth, createUserWithEmailAndPassword,  updateProfile } from '../../configs/firebaseConfig';
 import styled from 'styled-components/macro'
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from '../../features/users/usersSlice'
-import { saveUserDetails } from "../../features/users/usersSlice";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import Modal from "../../components/Modal/modal"
 
 

@@ -23,6 +23,9 @@ import { Navbar } from './components/Navbar'
 import Secret from './pages/protected/Secret'
 import EditSongPageTest  from './pages/EditSongPageTest'
 
+import styled from 'styled-components/macro'
+
+
 const App = () => {
 
   const user = useSelector(selectUser);
@@ -49,6 +52,7 @@ const App = () => {
 
 
   return (
+    <Wrapper>
     <Router>
     <Navbar />
       <Routes>
@@ -79,7 +83,12 @@ const App = () => {
         />
       </Routes>
     </Router>
+    </Wrapper>
   )
 }
 
 export default App
+
+const Wrapper = styled.div`
+  background: #4B1D3F;
+`

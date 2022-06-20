@@ -32,14 +32,15 @@ import {
     signOut 
     } from 'firebase/auth';
 
+
 export const firebaseConfig = {
-  apiKey: "AIzaSyBSjfCRBi1pMDKFYWR5bbF9QEjZmW3QUQg",
-  authDomain: "songify-72495.firebaseapp.com",
-  projectId: "songify-72495",
-  storageBucket: "songify-72495.appspot.com",
-  messagingSenderId: "991434183077",
-  appId: "1:991434183077:web:34319aa14a13e428aad84c",
-  measurementId: "G-CH1XT3GVJM"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
 // Initialize Firebase
@@ -48,6 +49,7 @@ const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 
 const auth = getAuth();
+
 
 const songsColRef = collection(db, 'songs')
 

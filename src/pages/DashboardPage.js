@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 import { selectUser } from '../features/users/usersSlice'
 import { selectSongLyric } from '../features/lyrics/lyricsSlice'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 
 const DashboardPage = () => {
@@ -18,9 +21,9 @@ const DashboardPage = () => {
     
     return (
         <Wrapper>
-            <Title>Profile</Title>
+            <FontAwesomeIcon size="8x" color="#0E7C7B" icon={faCircleUser} />
             <Paragraph>Welcome {user && user.displayName}</Paragraph>
-            <SubHeader>Search History</SubHeader>
+            <FontAwesomeIcon size="3x" icon={faMagnifyingGlass} />
             { newArray.length > 0 &&
                 <Table>
                 <TableContent>
@@ -38,12 +41,12 @@ const DashboardPage = () => {
                 </Table>
             }
             <Div>
-                <Button>
+                <Button theme="blue">
                     <Link to="/songs">
                         View Songs
                     </Link>
                 </Button>
-                <Button>
+                <Button theme="blue">
                     <Link to="/WriteSong">
                         Write Song
                     </Link>
@@ -56,6 +59,18 @@ const DashboardPage = () => {
 
 export default DashboardPage;
 
+const theme = {
+    blue: {
+      default: "#17BEBB",
+      hover: "#0E7C7B"
+    },
+    pink: {
+      default: "palevioletred",
+      hover: "#ad1457"
+    }
+  };
+
+
 const Wrapper = styled.section`
     background: papayawhip;
     text-align: center;
@@ -63,25 +78,14 @@ const Wrapper = styled.section`
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+    padding: 40px;
 `;
 
 const Paragraph = styled.p`
- color: palevioletred;
+ font-size: 36px;
+ margin-top: 20px;
+ color: #17BEBB;
 `
-
-const Title = styled.h2`
-    font-size: 3.5em;
-    font-weight: bold;
-    text-align: center;
-    color: #F8B88B
-`;
-
-const SubHeader = styled.h3`
-    font-size: 2.5em;
-    font-weight: bold;
-    text-align: center;
-    color: #F8B88B
-`;
 
 const Div = styled.div`
     width: 50%;
@@ -92,7 +96,7 @@ const Div = styled.div`
 
 
 const Button = styled.button`
-  background: #F8B88B;
+  background-color: ${(props) => theme[props.theme].default};
   padding: 1rem 1rem;
   font-weight: 700;
   cursor: pointer;
@@ -101,12 +105,11 @@ const Button = styled.button`
   text-transform: uppercase;
   box-shadow: 0px 2px 2px lightgray;
   transition: ease background-color 250ms;
+  &:hover {
+    background-color: ${(props) => theme[props.theme].hover};
+  }
   &:disabled {
     opacity: 0.7;
-  }
-  &:hover {
-    background: salmon;
-    color:white;
   }
   margin: 20px 0px 20px 0px;
   align-self: center;

@@ -61,7 +61,7 @@ export const LyricsSearchForm = ({ showLyricsDisplay }) => {
           >
           </Input>
           <div>
-            <Button theme="pink" onClick={handleSubmit}>Submit</Button>
+            <Button theme="blue" onClick={handleSubmit}>Submit</Button>
           </div>
           { songList.length !==0 &&
           <Table>
@@ -85,8 +85,8 @@ export const LyricsSearchForm = ({ showLyricsDisplay }) => {
 
 const theme = {
     blue: {
-      default: "#3f51b5",
-      hover: "#283593"
+      default: "#17BEBB",
+      hover: "#0E7C7B"
     },
     pink: {
       default: "palevioletred",

@@ -34,7 +34,7 @@ export const AddSongForm = () => {
 
   return (
     <Wrapper>
-      <Title>Add a New Song</Title>
+      <Title>Add Song</Title>
       <Form>
             <SongTitleDiv>
                 <Label htmlFor="songTitle">Song Title:</Label>
@@ -59,7 +59,7 @@ export const AddSongForm = () => {
                     onChange={onLyricChanged}
                 />
             </LyricDiv>
-          <Button type="button" onClick={onSaveReduxSongClicked} disabled={!canSave}>
+          <Button type="button" theme="blue" onClick={onSaveReduxSongClicked} disabled={!canSave}>
             Save Song
           </Button>
       </Form>
@@ -69,8 +69,8 @@ export const AddSongForm = () => {
 
 const theme = {
     blue: {
-      default: "#3f51b5",
-      hover: "#283593"
+      default: "#17BEBB",
+      hover: "#0E7C7B"
     },
     pink: {
       default: "palevioletred",
@@ -91,7 +91,7 @@ const Title = styled.h2`
     font-size: 3.5em;
     font-weight: bold;
     text-align: center;
-    color: #F8B88B
+    color: #17BEBB;
 `;
 
 const Form = styled.div`

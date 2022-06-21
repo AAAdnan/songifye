@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom'
 import { TimeAgo } from '../features/songs/TimeAgo'
 import { SongAuthor } from '../features/songs/SongAuthor'
 import styled from 'styled-components/macro'
-import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc} from 'firebase/firestore'
-import {db, handleDelete, onSaveSongClicked} from '../configs/firebaseConfig'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMusic } from '@fortawesome/free-solid-svg-icons'
+import { onSaveSongClicked} from '../configs/firebaseConfig'
 
 export const SongsList = () => {
 
@@ -27,11 +28,11 @@ export const SongsList = () => {
       <p>{song.lyric.substring(0, 100)}</p>
       <Div>
       <Link to={`/songs/${song.id}`}>
-        <Button>
+        <Button theme="blue">
          View Song
         </Button>
       </Link>
-        <Button onClick={() => onSaveSongClicked(song.createdBy , song.title, song.lyric)} >
+        <Button theme="blue" onClick={() => onSaveSongClicked(song.createdBy , song.title, song.lyric)} >
         Save Song
         </Button>
     </Div>
@@ -44,18 +45,23 @@ export const SongsList = () => {
 
   return (
     <Wrapper className="posts-list">
-      <Title>Songs</Title>
+      <FontAwesomeIcon size="4x" color="#0E7C7B" icon={faMusic} />
       {renderedSongs}
     </Wrapper>
   )
 }
 
-const Title = styled.h2`
-    font-size: 3.5em;
-    font-weight: bold;
-    text-align: center;
-    color: #F8B88B
-`;
+const theme = {
+  blue: {
+    default: "#17BEBB",
+    hover: "#0E7C7B"
+  },
+  pink: {
+    default: "palevioletred",
+    hover: "#ad1457"
+  }
+};
+
 
 const Div = styled.div`
   padding: 10px;
@@ -67,19 +73,17 @@ const Article = styled.article`
 `
 
 const Button = styled.button`
-  display: inline-block;
   font-size: 1.1rem;
   cursor: pointer;
-  background: #ea3546;
+  background-color: ${(props) => theme[props.theme].default};
+  &:hover {
+    background-color: ${(props) => theme[props.theme].hover};
+  }
   color: white;
   border-radius: 4px;
   font-weight: 700;
   padding: 0.75rem 1.5rem;
   margin-bottom: 5px;
-  &:hover {
-    background: salmon;
-    color:white;
-  }
 `
 
 const Wrapper = styled.section`
@@ -89,5 +93,6 @@ const Wrapper = styled.section`
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+    padding: 50px;
 `;
 

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { TimeAgo } from '../features/songs/TimeAgo'
 import { SongAuthor } from '../features/songs/SongAuthor'
 import styled from 'styled-components/macro'
 import {collection, query, orderBy, addDoc, serverTimestamp, onSnapshot, deleteDoc, doc} from 'firebase/firestore'
 import {db, handleDelete} from '../configs/firebaseConfig'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
+
 
 export const SavedSongsList = () => {
 
@@ -28,25 +28,29 @@ export const SavedSongsList = () => {
 
   return (
     <Wrapper className="posts-list">
-      <Title>Songs</Title>
+      <FontAwesomeIcon size="4x" color="#0E7C7B" icon={faFloppyDisk} />
       {firebaseSongs && firebaseSongs.map((song) =>(
         <Div key={song.id}>
           <h3>{song.data.title}</h3>
           <p className="post-content">{song.data.lyric.substring(0, 100)}</p>
           <SongAuthor userId={song.data.createdBy} />
-        <Button onClick={() => handleDelete(song.id)}>Delete</Button>
+        <Button theme="blue" onClick={() => handleDelete(song.id)}>Delete</Button>
         </Div> 
     ))}
     </Wrapper>
   )
 }
 
-const Title = styled.h2`
-    font-size: 3.5em;
-    font-weight: bold;
-    text-align: center;
-    color: #F8B88B
-`;
+const theme = {
+    blue: {
+      default: "#17BEBB",
+      hover: "#0E7C7B"
+    },
+    pink: {
+      default: "palevioletred",
+      hover: "#ad1457"
+    }
+  };
 
 const Div = styled.div`
      display: flex;
@@ -57,6 +61,7 @@ const Div = styled.div`
 
 const Wrapper = styled.section`
     background: papayawhip;
+    padding: 50px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -65,7 +70,7 @@ const Wrapper = styled.section`
 `;
 
 const Button = styled.button`
-  background: #ea3546;
+  background-color: ${(props) => theme[props.theme].default};
   text-transform: uppercase;
   cursor: pointer;
   color: white;
@@ -74,8 +79,7 @@ const Button = styled.button`
   padding: 0.75rem 1.5rem;
   margin: 10px 0px ;
   &:hover {
-    background: salmon;
-    color:white;
+    background-color: ${(props) => theme[props.theme].hover};
   }
 `
 

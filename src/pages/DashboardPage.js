@@ -24,6 +24,7 @@ const DashboardPage = () => {
             <FontAwesomeIcon size="8x" color="#0E7C7B" icon={faCircleUser} />
             <Paragraph>Welcome {user && user.displayName}</Paragraph>
             <FontAwesomeIcon size="3x" icon={faMagnifyingGlass} />
+            <Div>
             { newArray.length > 0 &&
                 <Table>
                 <TableContent>
@@ -40,6 +41,7 @@ const DashboardPage = () => {
                 ))}
                 </Table>
             }
+            </Div>
             <Div>
                 <Button theme="blue">
                     <Link to="/songs">

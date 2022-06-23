@@ -5,7 +5,8 @@ import styled from 'styled-components/macro'
 import { useDispatch } from "react-redux";
 import { login } from '../../features/users/usersSlice'
 import Modal from "../../components/Modal/modal"
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCashRegister } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -59,7 +60,10 @@ const Register = () => {
 
   return (
     <Wrapper>
-      <Title>Register</Title>
+      <Div>
+        <FontAwesomeIcon  size="6x" color="#0E7C7B" icon={faCashRegister} />
+      </Div>
+      <br />
       Name
       <br />
       <Input
@@ -127,6 +131,11 @@ const Wrapper = styled.section`
   padding: 4em;
 `;
 
+const Div = styled.section`
+  margin-bottom: 20px;
+`;
+
+
 const Input = styled.input`
   padding: 10px;
   margin: 10px 0;
@@ -137,12 +146,6 @@ const Input = styled.input`
   font-family:inherit;
 `;
 
-const Title = styled.h1`
-  font-size: 3.5em;
-  text-align: center;
-  color: #F8B88B
-  ;
-`;
 
 const Button = styled.button`
   background-color: ${(props) => theme[props.theme].default};
@@ -157,10 +160,6 @@ const Button = styled.button`
   transition: ease background-color 250ms;
   &:hover {
     background-color: ${(props) => theme[props.theme].hover};
-  }
-  &:disabled {
-    cursor: default;
-    opacity: 0.7;
   }
 `;
 

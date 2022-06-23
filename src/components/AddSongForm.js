@@ -4,6 +4,9 @@ import styled from 'styled-components/macro'
 import { songAdded} from '../features/songs/songsSlice'
 import { selectUser } from '../features/users/usersSlice'
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPen } from '@fortawesome/free-solid-svg-icons'
+
 
 export const AddSongForm = () => {
   const [title, setTitle] = useState('')
@@ -34,7 +37,9 @@ export const AddSongForm = () => {
 
   return (
     <Wrapper>
-      <Title>Add Song</Title>
+      <Icon>
+       <FontAwesomeIcon  size="6x" color="#0E7C7B" icon={faPen} />
+      </Icon>
       <Form>
             <SongTitleDiv>
                 <Label htmlFor="songTitle">Song Title:</Label>
@@ -87,13 +92,6 @@ const Wrapper = styled.section`
     min-height: 100vh;
 `;
 
-const Title = styled.h2`
-    font-size: 3.5em;
-    font-weight: bold;
-    text-align: center;
-    color: #17BEBB;
-`;
-
 const Form = styled.div`
     display: flex;
     text: arial;
@@ -111,6 +109,11 @@ const Div = styled.div`
   align-items: center;
   width: 100%;
 `
+
+const Icon = styled.section`
+  margin-bottom: 40px;
+`;
+
 
 const SongTitleDiv = styled.div`
     display: flex;

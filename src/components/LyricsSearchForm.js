@@ -4,6 +4,8 @@ import styled from 'styled-components/macro'
 import { useSelector, useDispatch } from 'react-redux'
 import { artistAdded } from '../features/lyrics/lyricsSlice'
 import { songAdded } from '../features/lyrics/lyricsSlice'  
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 
 export const LyricsSearchForm = ({ showLyricsDisplay }) => {
@@ -51,7 +53,9 @@ export const LyricsSearchForm = ({ showLyricsDisplay }) => {
 
     return (
       <Wrapper>
-          <Title>Lyrics Search</Title>
+          <Div>
+           <FontAwesomeIcon size="2x" color="#0E7C7B" icon={faMagnifyingGlass} />
+          </Div>
           <Input 
             type="text"
             name="lyrics"
@@ -94,11 +98,8 @@ const theme = {
     }
   };
 
-const Title = styled.h1`
-  font-size: 3.5em;
-  text-align: center;
-  color: #F8B88B
-  ;
+const Div = styled.h1`
+  margin-bottom: 20px;
 `;
 
 const Wrapper = styled.section`

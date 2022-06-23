@@ -6,6 +6,7 @@ import Modal from "../../components/Modal/modal"
 import styled from 'styled-components/macro'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { faSignIn } from '@fortawesome/free-solid-svg-icons'
 import { login } from '../../features/users/usersSlice'
 
 
@@ -54,7 +55,10 @@ let navigate = useNavigate();
 
   return (
     <Wrapper>
-      <Title>Login</Title>
+    <Div>
+      <FontAwesomeIcon  size="6x" color="#0E7C7B" icon={faSignIn} /> 
+    </Div>
+      <br />
       Email:
       <br />
       <Input
@@ -81,7 +85,6 @@ let navigate = useNavigate();
         >
         {errorMessage}
       </Modal>
-      <FontAwesomeIcon icon={faCoffee} />
     </Wrapper>
   );
 };
@@ -123,6 +126,10 @@ const Input = styled.input`
   font-family:inherit;
 `;
 
+const Div = styled.section`
+  margin-bottom: 20px;
+`;
+
 const Button = styled.button`
   background-color: ${(props) => theme[props.theme].default};
   color: white;
@@ -136,10 +143,6 @@ const Button = styled.button`
   transition: ease background-color 250ms;
   &:hover {
     background-color: ${(props) => theme[props.theme].hover};
-  }
-  &:disabled {
-    cursor: default;
-    opacity: 0.7;
   }
 `;
 

@@ -18,7 +18,7 @@ export const Navbar = () => {
     return (
     <nav>
         <section>
-        {user && <Link to="/">
+        {user && <Link to="/Profile">
         Profile
         </Link>}
         {!user && <Link to="/login">

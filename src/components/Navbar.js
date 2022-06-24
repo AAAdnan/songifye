@@ -30,11 +30,14 @@ export const Navbar = () => {
         <Link to="/lyricsearch">
         Find Lyrics
         </Link>
+        <Link to="/Piano">
+        Virtual Piano
+        </Link>
         {user && <Link to="/WriteSong">
-        Write Songs
+        Write
         </Link>}
         {user && <Link to="/songs">
-        Current Songs
+        Songs
         </Link>}
         {user && <Link to="/SavedSongs">
         Saved Songs

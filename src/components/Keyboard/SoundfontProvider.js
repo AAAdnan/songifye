@@ -7,8 +7,8 @@ import Soundfont from 'soundfont-player';
 class SoundfontProvider extends React.Component {
   static propTypes = {
     instrumentName: PropTypes.string.isRequired,
-    hostname: PropTypes.string.isRequired,
     format: PropTypes.oneOf(['mp3', 'ogg']),
+    hostname: PropTypes.string.isRequired,
     soundfont: PropTypes.oneOf(['MusyngKite', 'FluidR3_GM']),
     audioContext: PropTypes.instanceOf(window.AudioContext),
     render: PropTypes.func,

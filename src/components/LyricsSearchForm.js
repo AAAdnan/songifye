@@ -19,10 +19,11 @@ export const LyricsSearchForm = ({ showLyricsDisplay }) => {
 
     const dispatch = useDispatch();
 
-
     const { data, error, isLoading } = useGetSongsByArtistQuery(artist, { skip: skipSongSearch })
 
+
     console.log(data)
+
 
     if(data && data.data) {
         setSkipSongSearch(!skipSongSearch)

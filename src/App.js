@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 
 import { auth, onAuthStateChanged} from '../src/configs/firebaseConfig'
 import { login, logout, selectUser } from '../src/features/users/usersSlice'
@@ -8,12 +8,10 @@ import { useSelector, useDispatch } from "react-redux";
 import ProtectedRoute from './services/ProtectedRoute';
 
 import DashboardPage from './pages/DashboardPage'
-import PianoPage from './pages/PianoPage'
 import SongsPage from './pages/SongsPage'
 import SavedSongsPage from './pages/SavedSongsPage'
 import SingleSongPage from './pages/SingleSongPage'
 import CreateSongPage from './pages/CreateSongPage'
-import WriteSongPage from './pages/WriteSongPage'
 import EditSongPage  from './pages/EditSongPage'
 import LyricsSearchFormPage from './pages/LyricsSearchFormPage'
 import Login from './pages/auth/Login'
@@ -57,17 +55,15 @@ const App = () => {
     <Router>
     <Navbar />
       <Routes>
-        <Route exact path="" element={<LyricsSearchFormPage/>} />
+        <Route exact path="/" element={<LyricsSearchFormPage/>} />
         <Route exact path="Profile" element={<DashboardPage/>} />
         <Route exact path="login" element={<Login/>} />
         <Route exact path="Register" element={<Register/>} />
         <Route exact path="Reset" element={<Reset/>} />
         <Route exact path="Songs" element={<SongsPage/>} />
-        <Route exact path="Piano" element={<PianoPage />} />
         <Route exact path="SavedSongs" element={<SavedSongsPage/>} />
         <Route exact path="Songs/:id" element={<SingleSongPage />} />
         <Route exact path="WriteSong" element={<CreateSongPage />} />
-        <Route exact path="WriteSongTest" element={<WriteSongPage />} />
         <Route exact path="EditSongPageTest" element={<EditSongPageTest />} />
         <Route exact path="editSong/:id" element={<EditSongPage />} />
         <Route exact path="LyricSearch" element={<LyricsSearchFormPage />} />

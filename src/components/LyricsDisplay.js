@@ -1,17 +1,13 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState } from "react";
 import { useGetLyricsByArtistQuery } from '../services/lyrics'
-import Table from "./Table";
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components/macro'
-import { formatRelativeWithOptions } from "date-fns/fp";
 import { useNavigate } from "react-router-dom";
 
 
 
 export const LyricsDisplay = ({ showLyricsDisplay }) => {
 
-    const dispatch = useDispatch()
-    let navigate = useNavigate();
 
     const [skipLyricSearch, setSkipLyricSearch ] = useState(false)
 

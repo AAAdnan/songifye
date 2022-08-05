@@ -5,7 +5,6 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Modal from "../../components/Modal/modal"
 import styled from 'styled-components/macro'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { faSignIn } from '@fortawesome/free-solid-svg-icons'
 import { login } from '../../features/users/usersSlice'
 
@@ -14,7 +13,6 @@ const Login = () => {
     
 let navigate = useNavigate();
   
-     
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("")
@@ -39,9 +37,12 @@ let navigate = useNavigate();
           })
         );
         navigate("/");
+        console.log('return successfull')
+        console.log(userAuth)
     
       })
       .catch((error) => {
+        console.log('return error')
         const errorCode = error.code;
         setErrorMessage(error.message)
         console.log("An error occured: ", errorCode, errorMessage);
